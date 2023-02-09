@@ -23,13 +23,15 @@ Reviewed by Wilbur, 2023-02-09
 
 `fin start`
 
+`fin hosts add`
+
 `fin composer install`
 
 ## Download and import the database
 
 Copies of the DB are available in the /db directory.
 
-`gunzip db/dbfilename.sql.gz | fin db import`
+`gunzip -k db/dbfilename.sql.gz | fin db import`
 
 `fin drush cr`
 
