@@ -33,11 +33,11 @@ Copies of the DB are available in the /db directory.
 
 `gunzip -k db/dbfilename.sql.gz | fin db import`
 
+## Install files
+
+`tar -xvf db/2023-02-09-bsg-files.tar.gz -C web/sites/default`
+
 `fin drush cr`
-
-## Import local configuration
-
-`fin drush cim`
 
 ## Log into website as admin
 

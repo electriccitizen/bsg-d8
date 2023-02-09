@@ -47,8 +47,3 @@ $settings['trusted_host_patterns'] = [
 $settings['file_temporary_path'] = '/tmp';
 $settings['file_public_path'] = 'sites/default/files';
 $settings['file_private_path'] = 'sites/default/files/private';
-
-# enables twig debugging per page load
-$settings['cache']['bins']['render'] = 'cache.backend.null';
-$settings['cache']['bins']['page'] = 'cache.backend.null';
-$settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
