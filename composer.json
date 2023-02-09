@@ -21,7 +21,8 @@
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
-        "drupal/upgrade_status": "^3.18"
+        "drupal/upgrade_status": "^3.18",
+        "drush/drush": "^10"
     },
     "conflict": {
         "drupal/drupal": "*"
