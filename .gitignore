@@ -77,7 +77,7 @@ web/sites/simpletest
 ############
 *.7z
 *.dmg
-*.gz
+#*.gz
 *.bz2
 *.iso
 *.jar
