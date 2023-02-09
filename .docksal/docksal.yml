@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  # Adds a Solr container with version 3.x of Solr - see
+  #  http://docksal.readthedocs.io/en/master/tools/apache-solr/ and 
+  #  https://hub.docker.com/r/docksal/solr/tags/.
+  # The "ports" and "environment" configuration allows the Solr server to be interacted
+  #  directly with at http://192.168.64.100:8983/solr/
+  db:
+    image: docksal/mariadb:10.4
+  cli:
+    image: docksal/cli:php7.4
+    # Uncomment to add support for xdebug - see http://docksal.readthedocs.io/en/master/tools/xdebug/.  
