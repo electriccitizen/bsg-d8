@@ -24,7 +24,11 @@ $settings['file_scan_ignore_directories'] = [
   'bower_components',
 ];
 
-$settings['config_sync_directory'] = 'sites/default/files/config_R4RO7RUzNQ-mOpAK9ulSW9-TbiptkZbJ4ant2GklQMBRIS0_FZDERjyEBH9HZfZ2DCuo7qDf9Q/sync';
+/**
+ * Place the config directory outside of the Drupal root.
+ */
+
+$settings['config_sync_directory'] = '../config/sync';
 
 $config['system.logging']['error_level'] = 'verbose';
 

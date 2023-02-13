@@ -9,5 +9,5 @@ services:
   db:
     image: docksal/mariadb:10.4
   cli:
-    image: docksal/cli:php7.4
+    image: docksal/cli:php8.1
     # Uncomment to add support for xdebug - see http://docksal.readthedocs.io/en/master/tools/xdebug/.  
