@@ -9,6 +9,9 @@ $databases['default']['default'] = array (
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
+  'init_commands' => [
+  'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+  ],
 );
 
 $settings['hash_salt'] = 'P0ylJzp9vEJsp8rxb8lTYeubSIwT5k7mqZkMRCyicNTQitXTusi2CSdq0tUtRY-a3J_p91lAqQ';
@@ -24,7 +27,11 @@ $settings['file_scan_ignore_directories'] = [
   'bower_components',
 ];
 
-$settings['config_sync_directory'] = 'sites/default/files/config_R4RO7RUzNQ-mOpAK9ulSW9-TbiptkZbJ4ant2GklQMBRIS0_FZDERjyEBH9HZfZ2DCuo7qDf9Q/sync';
+/**
+ * Place the config directory outside of the Drupal root.
+ */
+
+$settings['config_sync_directory'] = '../config/sync';
 
 $config['system.logging']['error_level'] = 'verbose';
 

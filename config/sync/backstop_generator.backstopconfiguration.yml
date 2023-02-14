@@ -1,0 +1,29 @@
+viewports:
+  iphone_h: iphone_h
+  iphone_v: iphone_v
+  tablet_v: tablet_v
+  Tablet: Tablet
+  Desktop: Desktop
+  HD: HD
+  HD+: 0
+  UHD: 0
+pre_defined_pages_table:
+  d96176c1-abf7-416a-ad04-33a152fcde82:
+    page: '9'
+    actions:
+      remove_page: 'Remove one'
+  086d3cc9-7b83-43c6-913d-c5e868bc3a1b:
+    page: '7'
+    actions:
+      remove_page: 'Remove one'
+actions:
+  add_page: 'Add one more'
+additional_random_pages: '0'
+submit: 'Save and View'
+form_build_id: form-W5Y0AuS5qlXaIn91KnMqsr-JeroF-U9Vn41erju2HiE
+form_token: ixmT52H42Xxo3E_kiGAstV3kGSo2zOW6S6t59l-jhVc
+form_id: backstop_configuration_form
+op: 'Save and View'
+_core:
+  default_config_hash: 7xVB080YEboxcQRXzaoHbwndEXV23vA7P4Rj8TSoO9A
+referenceurl: 'https://electriccitizen.com/'

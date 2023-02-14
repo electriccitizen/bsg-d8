@@ -9,6 +9,9 @@ $databases['default']['default'] = array (
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
+  'init_commands' => [
+  'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+  ],
 );
 
 $settings['hash_salt'] = 'P0ylJzp9vEJsp8rxb8lTYeubSIwT5k7mqZkMRCyicNTQitXTusi2CSdq0tUtRY-a3J_p91lAqQ';
