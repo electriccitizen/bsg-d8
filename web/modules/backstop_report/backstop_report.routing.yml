@@ -1,0 +1,31 @@
+entity.backstop_report.collection:
+  path: '/admin/structure/backstop-report'
+  defaults:
+    _entity_list: 'backstop_report'
+    _title: 'Backstop Report configuration'
+  requirements:
+    _permission: 'administer backstop_report'
+
+entity.backstop_report.add_form:
+  path: '/admin/structure/backstop_report/add'
+  defaults:
+    _entity_form: 'backstop_report.add'
+    _title: 'Add a backstop report'
+  requirements:
+    _permission: 'administer backstop_report'
+
+entity.backstop_report.edit_form:
+  path: '/admin/structure/backstop-report/{backstop_report}'
+  defaults:
+    _entity_form: 'backstop_report.edit'
+    _title: 'Edit a backstop report'
+  requirements:
+    _permission: 'administer backstop_report'
+
+entity.backstop_report.delete_form:
+  path: '/admin/structure/backstop-report/{backstop_report}/delete'
+  defaults:
+    _entity_form: 'backstop_report.delete'
+    _title: 'Delete a backstop report'
+  requirements:
+    _permission: 'administer backstop_report'

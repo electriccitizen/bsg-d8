@@ -1,0 +1,9 @@
+name: Backstop Report
+type: module
+description: 'Provides a backstop report configuration entity.'
+package: Testing
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - backstop_generator
+configure: entity.backstop_report.collection

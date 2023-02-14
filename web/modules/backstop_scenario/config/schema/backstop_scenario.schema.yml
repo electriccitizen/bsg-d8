@@ -1,0 +1,14 @@
+backstop_scenario.backstop_scenario.*:
+  type: config_entity
+  label: Backstop Scenario
+  mapping:
+    id:
+      type: string
+      label: ID
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+    description:
+      type: string

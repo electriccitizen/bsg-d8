@@ -1,0 +1,31 @@
+entity.backstop_viewport.collection:
+  path: '/admin/structure/backstop-viewport'
+  defaults:
+    _entity_list: 'backstop_viewport'
+    _title: 'Backstop Viewport configuration'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+entity.backstop_viewport.add_form:
+  path: '/admin/structure/backstop_viewport/add'
+  defaults:
+    _entity_form: 'backstop_viewport.add'
+    _title: 'Add a backstop viewport'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+entity.backstop_viewport.edit_form:
+  path: '/admin/structure/backstop-viewport/{backstop_viewport}'
+  defaults:
+    _entity_form: 'backstop_viewport.edit'
+    _title: 'Edit a backstop viewport'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+entity.backstop_viewport.delete_form:
+  path: '/admin/structure/backstop-viewport/{backstop_viewport}/delete'
+  defaults:
+    _entity_form: 'backstop_viewport.delete'
+    _title: 'Delete a backstop viewport'
+  requirements:
+    _permission: 'administer backstop_viewport'

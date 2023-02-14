@@ -1,0 +1,5 @@
+entity.backstop_report.add_form:
+  route_name: 'entity.backstop_report.add_form'
+  title: 'Add backstop report'
+  appears_on:
+    - entity.backstop_report.collection

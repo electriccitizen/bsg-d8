@@ -1,0 +1,5 @@
+entity.backstop_viewport.add_form:
+  route_name: 'entity.backstop_viewport.add_form'
+  title: 'Add backstop viewport'
+  appears_on:
+    - entity.backstop_viewport.collection
