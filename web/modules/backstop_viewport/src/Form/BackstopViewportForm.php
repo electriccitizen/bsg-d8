@@ -43,11 +43,24 @@ class BackstopViewportForm extends EntityForm {
       '#default_value' => $this->entity->status(),
     ];
 
-    $form['description'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Description'),
-      '#default_value' => $this->entity->get('description'),
-      '#description' => $this->t('Description of the backstop viewport.'),
+//    $form['description'] = [
+//      '#type' => 'textarea',
+//      '#title' => $this->t('Description'),
+//      '#default_value' => $this->entity->get('description'),
+//      '#description' => $this->t('Description of the backstop viewport.'),
+//      '#rows' => 2,
+//    ];
+
+    $form['width'] = [
+      '#type' => 'number',
+      '#title' => t('Viewport Width'),
+      '#default_value' => $this->entity->get('width'),
+    ];
+
+    $form['height'] = [
+      '#type' => 'number',
+      '#title' => t('Viewport Height'),
+      '#default_value' => $this->entity->get('height'),
     ];
 
     return $form;
@@ -64,6 +77,7 @@ class BackstopViewportForm extends EntityForm {
       : $this->t('Updated backstop viewport %label.', $message_args);
     $this->messenger()->addStatus($message);
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
+    dpm($result);
     return $result;
   }
 

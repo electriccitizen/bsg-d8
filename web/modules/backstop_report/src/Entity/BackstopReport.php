@@ -42,7 +42,18 @@ use Drupal\backstop_report\BackstopReportInterface;
  *   config_export = {
  *     "id",
  *     "label",
- *     "description"
+ *     "description",
+ *     "viewports",
+ *     "onBeforeScript",
+ *     "scenarios",
+ *     "paths",
+ *     "report",
+ *     "engine",
+ *     "engineOptions",
+ *     "asyncCaptureLimit",
+ *     "asyncCompareLimit",
+ *     "debug",
+ *     "debugWindow"
  *   }
  * )
  */
@@ -75,5 +86,93 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
    * @var string
    */
   protected $description;
+
+  /**
+   * List of viewports included in this report.
+   *
+   * @var array
+   */
+  protected $viewports;
+
+  /**
+   *
+   *
+   * @var string
+   */
+  protected $onBeforeScript;
+
+  /**
+   * The list of scenarios (pages) in this report.
+   *
+   * @var array
+   */
+  protected $scenarios;
+
+  /**
+   *
+   *
+   * @var string
+   */
+  protected $paths;
+
+  /**
+   *
+   *
+   * @var string
+   */
+  protected $report;
+
+  /**
+   *
+   *
+   * @var string
+   */
+  protected $engine;
+
+  /**
+   *
+   *
+   * @var string
+   */
+  protected $engineOptions;
+
+  /**
+   *
+   *
+   * @var int
+   */
+  protected $asyncCaptureLimit;
+
+  /**
+   *
+   *
+   * @var int
+   */
+  protected $asyncCompareLimit;
+
+  /**
+   *
+   *
+   * @var bool
+   */
+  protected $debug;
+
+  /**
+   *
+   *
+   * @var bool
+   */
+  protected $debugWindow;
+
+  public function generateBackstopFile() {
+    dpm('howdy');
+  }
+
+  private function getConfigEntities($config_name) {
+    // Get the config entity manager.
+    $entity_storage = \Drupal::service('entity_type.manager')
+      ->getStorage($config_name);
+
+  }
 
 }

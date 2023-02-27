@@ -1,5 +1,5 @@
 entity.backstop_viewport.overview:
   title: Backstop Viewports
-  parent: system.admin_structure
+  parent: backstop_generator.backstop_configuration_view #system.admin_structure
   description: 'List of backstop viewports to extend site functionality.'
   route_name: entity.backstop_viewport.collection

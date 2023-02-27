@@ -1,0 +1,4 @@
+bs_keypress_selector:
+  css:
+    component:
+      css/bs-keypress-selector-widget.css: {}

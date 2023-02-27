@@ -42,7 +42,9 @@ use Drupal\backstop_viewport\BackstopViewportInterface;
  *   config_export = {
  *     "id",
  *     "label",
- *     "description"
+ *     "description",
+ *     "height",
+ *     "width"
  *   }
  * )
  */
@@ -75,5 +77,19 @@ class BackstopViewport extends ConfigEntityBase implements BackstopViewportInter
    * @var string
    */
   protected $description;
+
+  /**
+   * The height in pixels of the viewport.
+   *
+   * @var int
+   */
+  protected $height;
+
+  /**
+   * The width in pixels of the viewport.
+   *
+   * @var int
+   */
+  protected $width;
 
 }

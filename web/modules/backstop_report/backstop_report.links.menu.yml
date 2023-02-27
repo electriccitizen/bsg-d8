@@ -1,5 +1,5 @@
 entity.backstop_report.overview:
   title: Backstop Reports
-  parent: backstop_generator.backstop_configuration_form # system.admin_structure
+  parent: backstop_generator.backstop_configuration_view # system.admin_structure
   description: 'List of backstop reports to extend site functionality.'
   route_name: entity.backstop_report.collection

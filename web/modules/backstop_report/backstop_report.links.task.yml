@@ -1,8 +1,5 @@
-backstop_report.first:
-  title: One
-  route_name: entity.backstop_report.one
-  base_route: entity.backstop_report.one
-backstop_report.second:
-  title: Two
-  route_name: entity.backstop_scenario.two
-  base_route: entity.backstop_report.one
+backstop_report.reports:
+  title: Reports
+  route_name: entity.backstop_report.collection
+  base_route: backstop_generator.admin
+

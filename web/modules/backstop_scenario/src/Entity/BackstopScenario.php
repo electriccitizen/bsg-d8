@@ -42,7 +42,32 @@ use Drupal\backstop_scenario\BackstopScenarioInterface;
  *   config_export = {
  *     "id",
  *     "label",
- *     "description"
+ *     "description",
+ *     "onBeforeScript",
+ *     "cookiePath",
+ *     "url",
+ *     "referenceUrl",
+ *     "readyEvent",
+ *     "readySelector",
+ *     "readyTimeout",
+ *     "delay",
+ *     "hideSelectors",
+ *     "removeSelectors",
+ *     "onReadyScript",
+ *     "keyPressSelectors",
+ *     "hoverSelector",
+ *     "hoverSelectors",
+ *     "clickSelector",
+ *     "clickSelectors",
+ *     "postInteractionWait",
+ *     "scrollToSelector",
+ *     "selectors",
+ *     "selectorExpansion",
+ *     "expect",
+ *     "misMatchThreshold",
+ *     "requireSameDimensions",
+ *     "viewports",
+ *     "gotoParameters"
  *   }
  * )
  */
@@ -57,6 +82,7 @@ class BackstopScenario extends ConfigEntityBase implements BackstopScenarioInter
 
   /**
    * The backstop scenario label.
+   * Also the tag saved with your reference images.
    *
    * @var string
    */
@@ -75,5 +101,182 @@ class BackstopScenario extends ConfigEntityBase implements BackstopScenarioInter
    * @var string
    */
   protected $description;
+
+  /**
+   * Used to set up browser state e.g. cookies.
+   *
+   * @var string
+   */
+  protected $onBeforeScript;
+
+  /**
+   * Import cookies in JSON format.
+   *
+   * @var string
+   */
+  protected $cookiePath;
+
+  /**
+   * The url of your app state.
+   *
+   * @var string
+   */
+  protected $url;
+
+  /**
+   * Specify a different state or environment when creating reference.
+   *
+   * @var string
+   */
+  protected $referenceUrl;
+
+  /**
+   * Wait until this string has been logged to the console.
+   *
+   * @var string
+   */
+  protected $readyEvent;
+
+  /**
+   * Wait until this selector exists before continuing.
+   *
+   * @var string
+   */
+  protected $readySelector;
+
+  /**
+   * Timeout for readyEvent and readySelector.
+   *
+   * @var int
+   */
+  protected $readyTimeout;
+
+  /**
+   * Wait for x milliseconds.
+   *
+   * @var int
+   */
+  protected $delay;
+
+  /**
+   * Array of selectors set to visibility: hidden.
+   *
+   * @var array
+   */
+  protected $hideSelectors;
+
+  /**
+   * Array of selectors set to display: none.
+   *
+   * @var array
+   */
+  protected $removeSelectors;
+
+  /**
+   * Script to modify UI state prior to screen shots e.g. hovers, clicks etc.
+   *
+   * @var string
+   */
+  protected $onReadyScript;
+
+  /**
+   * List of selectors to simulate multiple sequential keypress interactions.
+   *
+   * @var array
+   */
+  protected $keyPressSelectors;
+
+  /**
+   * Move the pointer over the specified DOM element prior to screen shot.
+   *
+   * @var string
+   */
+  protected $hoverSelector;
+
+  /**
+   * Selectors to simulate multiple sequential hover interactions.
+   *
+   * @var array
+   */
+  protected $hoverSelectors;
+
+  /**
+   * Click the specified DOM element prior to screen shot.
+   *
+   * @var string
+   */
+  protected $clickSelector;
+
+  /**
+   * Selectors to simulate multiple sequential click interactions.
+   *
+   * @var array
+   */
+  protected $clickSelectors;
+
+  /**
+   * Wait for a selector after interacting with hoverSelector or clickSelector.
+   *
+   * @var string
+   */
+  protected $postInteractionWait;
+
+  /**
+   * Scrolls the specified DOM element into view prior to screen shot.
+   * (available with default onReadyScript)
+   *
+   * @var string
+   */
+  protected $scrollToSelector;
+
+  /**
+   * Array of selectors to capture.
+   *
+   * @var array
+   */
+  protected $selectors;
+
+  /**
+   * Whether to take screenshots of designated selectors.
+   *
+   * @var bool
+   */
+  protected $selectorExpansion;
+
+  /**
+   * The number of selector elements to test for.
+   *
+   * @var int
+   */
+  protected $expect;
+
+  /**
+   * Percentage of different pixels allowed to pass test.
+   *
+   * @var int
+   */
+  protected $misMatchThreshold;
+
+  /**
+   * If set to true -- any change in selector size will trigger a test failure.
+   *
+   * @var bool
+   */
+  protected $requireSameDimensions;
+
+  /**
+   * An array of screen size objects your DOM will be tested against.
+   *
+   * @var array
+   */
+  protected $viewports;
+
+  /**
+   * An array of settings passed to page.goto(url, parameters) function.
+   *
+   * @var array
+   */
+  protected $gotoParameters;
+
 
 }

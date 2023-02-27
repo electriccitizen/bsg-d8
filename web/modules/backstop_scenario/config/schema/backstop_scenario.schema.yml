@@ -12,3 +12,15 @@ backstop_scenario.backstop_scenario.*:
       type: string
     description:
       type: string
+
+# Default value.
+field.value.bs_keypress_selector:
+  type: mapping
+  label: Default value
+  mapping:
+    selector:
+      type: string
+      label: Selector
+    keyPress:
+      type: string
+      label: Key Press
