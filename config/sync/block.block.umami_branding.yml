@@ -1,0 +1,25 @@
+uuid: 3aad7bb1-2c39-4d28-b05f-95d7c8c88a5d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - umami
+_core:
+  default_config_hash: H_xCtuk8g3J4QCM1UczF4tgPFZsKR0-0CVhonm9C0Gw
+id: umami_branding
+theme: umami
+region: header
+weight: -7
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: true
+visibility: {  }

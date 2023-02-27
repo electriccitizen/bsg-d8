@@ -1,0 +1,73 @@
+uuid: 51746f1b-38e7-4fde-bbc4-178f988c79cb
+langcode: en
+status: true
+dependencies:
+  module:
+    - demo_umami
+_core:
+  default_config_hash: z8nqA01szKyOwLvEHtB4UggnrwZnENv18_kj_xLA04g
+id: umami-front
+label: 'Front page'
+module: demo_umami
+routes:
+  -
+    route_name: view.frontpage.page_1
+tips:
+  welcome:
+    id: welcome
+    plugin: text
+    label: 'Welcome to the Umami Drupal demo'
+    weight: 1
+    body: 'Drupal is a powerful open source content management system and this demo, based on a fictional food magazine called Umami, will introduce you to some of Drupal''s concepts and features.'
+  out-of-the-box:
+    id: out-of-the-box
+    plugin: text
+    label: 'Drupal''s core capabilities'
+    weight: 2
+    body: 'Drupal provides many of the features you need to start building powerful websites right out-of-the-box. The features presented in this demo are based entirely on Drupal 8''s core functionality.'
+  navigation:
+    id: navigation
+    plugin: text
+    label: Navigation
+    weight: 3
+    body: 'This is the main navigation menu for the Umami website. It is simple to create and administer menus and you can create as many menus as your site requires. For example, this site provides this main navigation as well as the user navigation displayed above.'
+    selector: .menu-main__link.is-active
+    position: left-start
+  umami-theme:
+    id: umami-theme
+    plugin: text
+    label: 'The Umami theme'
+    weight: 4
+    body: 'This website uses the custom Umami theme to style its appearance. This theme has been created using CSS and by customizing Drupal''s HTML templates that are built using the popular Twig templating system. Themes are also available for download and installation.'
+    selector: '.block-type-banner-block .summary'
+    position: right-start
+  managing-content:
+    id: managing-content
+    plugin: text
+    label: 'Managing content'
+    weight: 5
+    body: 'This example website provides a collection of articles and recipes that demonstrate how content can easily be managed in a flexible and structured way.'
+    selector: '.view-promoted-items--single .read-more__link'
+    position: right-start
+  umami-front-views:
+    id: umami-front-content
+    plugin: text
+    label: 'Configuring content display'
+    weight: 6
+    body: 'Display modes can be configured to provide different presentations of content. These promoted articles and recipes use the display modes feature to format the images with different ratios.'
+    selector: '.view-promoted-items--double .node:nth-child(1)'
+    position: left-start
+  umami-views:
+    id: umami-views
+    plugin: text
+    label: 'Displaying content with Views'
+    weight: 7
+    body: 'Drupal makes it simple to create lists of filtered content and control how the content is displayed using the Views feature. This latest recipes example uses a view to fetch the most recent four recipes, displays the view as a block that is positioned on the front page with the block system.'
+    selector: '.view-frontpage .node:nth-child(1)'
+    position: right-start
+  front-bookend:
+    id: front-bookend
+    plugin: text
+    label: 'Continue exploring Drupal'
+    weight: 8
+    body: 'The front page tour is now over. Feel free to click around and continue exploring Drupal.'
