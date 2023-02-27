@@ -1,0 +1,9 @@
+uuid: ab024cdb-96b2-466d-b352-f63fc2a3b71a
+langcode: en
+status: false
+dependencies: {  }
+id: phone
+label: Phone
+description: null
+height: '480'
+width: '320'

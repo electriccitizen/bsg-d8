@@ -1,0 +1,32 @@
+uuid: fa318901-a9f5-40fc-bc6d-54f460e86ffd
+langcode: en
+status: null
+dependencies: {  }
+id: crema_catalana
+label: 'Crema Catalana'
+description: null
+onBeforeScript: ''
+cookiePath: ''
+url: 'http://bsg-d8.docksal.site/es/recipes/crema-catalana'
+referenceUrl: ''
+readyEvent: ''
+readySelector: ''
+readyTimeout: ''
+delay: '0'
+hideSelectors: ''
+removeSelectors: ''
+onReadyScript: ''
+keyPressSelectors: ''
+hoverSelector: ''
+hoverSelectors: ''
+clickSelector: ''
+clickSelectors: ''
+postInteractionWait: ''
+scrollToSelector: ''
+selectors: ''
+selectorExpansion: 0
+expect: ''
+misMatchThreshold: '10'
+requireSameDimensions: 0
+viewports: {  }
+gotoParameters: null

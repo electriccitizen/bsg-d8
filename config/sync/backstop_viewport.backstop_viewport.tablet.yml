@@ -1,0 +1,9 @@
+uuid: 25ebb02a-3496-4c65-9814-1dd845c6276b
+langcode: en
+status: false
+dependencies: {  }
+id: tablet
+label: Tablet
+description: null
+height: '768'
+width: '1024'

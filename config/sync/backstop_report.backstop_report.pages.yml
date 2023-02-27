@@ -1,0 +1,24 @@
+uuid: bf74cf79-5888-454a-8e2a-bbc26c0fa090
+langcode: en
+status: null
+dependencies: {  }
+id: pages
+label: Pages
+description: null
+viewports:
+  desktop: desktop
+  phone: phone
+  tablet: tablet
+onBeforeScript: puppet/onBefore.js
+scenarios:
+  about_umami: about_umami
+  crema_catalana: 0
+  skip_the_spirits_with_delicious_mocktails: 0
+paths: "bitmaps_reference|backstop_data/bitmaps_reference\r\nbitmaps_test|backstop_data/bitmaps_test\r\nhtml_report|backstop_data/html_report\r\nci_report|backstop_data/ci_report"
+report: browser
+engine: puppeteer
+engineOptions: '--no-sandbox'
+asyncCaptureLimit: '5'
+asyncCompareLimit: '50'
+debug: 0
+debugWindow: 0

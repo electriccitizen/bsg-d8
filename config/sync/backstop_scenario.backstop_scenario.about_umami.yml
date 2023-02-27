@@ -1,0 +1,32 @@
+uuid: 89091884-8aef-4321-aff7-abf95c161cc9
+langcode: en
+status: null
+dependencies: {  }
+id: about_umami
+label: 'About Umami'
+description: null
+onBeforeScript: ''
+cookiePath: ''
+url: 'http://bsg-d8.docksal.site/en/about-umami'
+referenceUrl: ''
+readyEvent: ''
+readySelector: ''
+readyTimeout: ''
+delay: '0'
+hideSelectors: ''
+removeSelectors: ''
+onReadyScript: ''
+keyPressSelectors: ''
+hoverSelector: ''
+hoverSelectors: ''
+clickSelector: ''
+clickSelectors: ''
+postInteractionWait: ''
+scrollToSelector: ''
+selectors: ''
+selectorExpansion: 0
+expect: ''
+misMatchThreshold: '10'
+requireSameDimensions: 0
+viewports: {  }
+gotoParameters: null
