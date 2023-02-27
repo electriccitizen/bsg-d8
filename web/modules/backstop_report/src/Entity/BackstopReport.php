@@ -206,8 +206,10 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
       $scenario->cookiePath = $entity->get('cookiePath');
       $scenario->referenceUrl = $entity->get('referenceUrl');
       $scenario->delay = $entity->get('delay');
-      $scenario->hideSelectors = explode(',', $entity->get('hideSelectors'));
-      $scenario->removeSelectors = explode(',', $entity->get('removeSelectors'));
+      $scenario->hideSelectors = !empty($entity->get('hideSelectors')) ?
+        explode(',', $entity->get('hideSelectors')) : [];
+      $scenario->removeSelectors = !empty($entity->get('removeSelectors')) ?
+        explode(',', $entity->get('removeSelectors')) : [];
       $scenarios[] = $scenario;
     }
     $backstop->scenarios = $scenarios;
