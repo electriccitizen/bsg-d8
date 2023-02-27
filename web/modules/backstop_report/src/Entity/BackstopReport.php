@@ -4,6 +4,8 @@ namespace Drupal\backstop_report\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\backstop_report\BackstopReportInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManager;
 
 /**
  * Defines the backstop report entity type.
@@ -164,15 +166,90 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
    */
   protected $debugWindow;
 
+  /**
+   * @inheritdoc
+   */
   public function generateBackstopFile() {
-    dpm('howdy');
+    $backstop = new \stdClass();
+    $viewport_entities = $this->getConfigEntities('backstop_viewport');
+    $scenario_entities = $this->getConfigEntities('backstop_scenario');
+
+    $backstop->id = $this->label;
+
+    // Create the viewports array.
+    $viewports = [];
+    foreach ($this->viewports as $key => $id) {
+      if ($id === 0) {
+        continue;
+      }
+      $entity = $viewport_entities->load($id);
+      $viewport = new \stdClass();
+      $viewport->label = $id;
+      $viewport->width = $entity->get('width');
+      $viewport->height = $entity->get('height');
+      $viewports[] = $viewport;
+    }
+    $backstop->viewports = $viewports;
+
+    $backstop->onBeforeScript = $this->onBeforeScript;
+
+    // Create the scenarios array.
+    $scenarios = [];
+    foreach ($this->scenarios as $key => $id) {
+      if ($id === 0) {
+        continue;
+      }
+      $entity = $scenario_entities->load($id);
+      $scenario = new \stdClass();
+      $scenario->label = $entity->label();
+      $scenario->url = $entity->get('url');
+      $scenario->cookiePath = $entity->get('cookiePath');
+      $scenario->referenceUrl = $entity->get('referenceUrl');
+      $scenario->delay = $entity->get('delay');
+      $scenario->hideSelectors = explode(',', $entity->get('hideSelectors'));
+      $scenario->removeSelectors = explode(',', $entity->get('removeSelectors'));
+      $scenarios[] = $scenario;
+    }
+    $backstop->scenarios = $scenarios;
+
+    // Create the paths object.
+    $paths_array = explode(PHP_EOL, $this->paths);
+    $paths = new \stdClass();
+    foreach ($paths_array as $path) {
+      preg_match('/(\w+)\|([\w\/]+)/', $path, $path_parts);
+      $paths->{$path_parts[1]} = $path_parts[2];
+    }
+    $backstop->paths = $paths;
+
+    $backstop->report = explode(',', $this->report);
+    $backstop->engine = $this->engine;
+
+    $engineOptions = new \stdClass();
+    $engineOptions->args = explode(',', $this->engineOptions);
+    $backstop->engineOptions = $engineOptions;
+
+    $backstop->asyncCaptureLimit = $this->asyncCaptureLimit;
+    $backstop->asyncCompareLimit = $this->asyncCompareLimit;
+    $backstop->debug = $this->debug == 1 ? true : false;
+    $backstop->debugWindow = $this->debugWindow == 1 ? true : false;
+
+    // Create the backstop.json file.
+    $backstop_file = fopen("/var/www/tests/backstop/backstop_{$this->id}.json", "w");
+    fwrite($backstop_file, json_encode($backstop, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK));
+    fclose($backstop_file);
   }
 
-  private function getConfigEntities($config_name) {
+  /**
+   * Return the storage interface for the specified config entity.
+   *
+   * @param string $config_name
+   *
+   * @return \Drupal\Core\Entity\EntityStorageInterface
+   */
+  private function getConfigEntities(string $config_name): EntityStorageInterface {
     // Get the config entity manager.
-    $entity_storage = \Drupal::service('entity_type.manager')
+    return \Drupal::service('entity_type.manager')
       ->getStorage($config_name);
-
   }
 
 }

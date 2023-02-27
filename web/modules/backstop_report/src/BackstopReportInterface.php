@@ -9,4 +9,10 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  */
 interface BackstopReportInterface extends ConfigEntityInterface {
 
+  /**
+   * Generates a backstop file from configuration settings.
+   *
+   * @return mixed
+   */
+  public function generateBackstopFile();
 }

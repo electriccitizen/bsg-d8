@@ -145,7 +145,7 @@ class BackstopReportForm extends EntityForm {
       : $this->t('Updated backstop report %label.', $message_args);
     $this->messenger()->addStatus($message);
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
-    $this->generateBackstopFile();
+    $this->entity->generateBackstopFile();
     return $result;
   }
 
@@ -163,7 +163,6 @@ class BackstopReportForm extends EntityForm {
     $config_list = [];
     foreach ($configs as $config) {
       $config_list[$config->id()] = $config->label();
-//      dpm($entity_storage->load($config->id()));
     }
     return $config_list;
   }
@@ -176,80 +175,4 @@ class BackstopReportForm extends EntityForm {
     return $paths_default;
   }
 
-  public function generateBackstopFile() {
-    $backstop = new \stdClass();
-    $viewport_entities = $this->getConfigEntities('backstop_viewport');
-    $scenario_entities = $this->getConfigEntities('backstop_scenario');
-
-    $backstop->id = $this->entity->label();
-
-    // Create the viewports array.
-    $viewports = [];
-    foreach ($this->entity->get('viewports') as $key => $id) {
-      if ($id === 0) {
-        continue;
-      }
-      $entity = $viewport_entities->load($id);
-      $viewport = new \stdClass();
-      $viewport->label = $id;
-      $viewport->width = $entity->get('width');
-      $viewport->height = $entity->get('height');
-      $viewports[] = $viewport;
-    }
-    $backstop->viewports = $viewports;
-
-    $backstop->onBeforeScript = $this->entity->get('onBeforeScript');
-
-    // Create the scenarios array.
-    $scenarios = [];
-    foreach ($this->entity->get('scenarios') as $key => $id) {
-      if ($id === 0) {
-        continue;
-      }
-      $entity = $scenario_entities->load($id);
-      $scenario = new \stdClass();
-      $scenario->label = $entity->label();
-      $scenario->url = $entity->get('url');
-      $scenario->cookiePath = $entity->get('cookiePath');
-      $scenario->referenceUrl = $entity->get('referenceUrl');
-      $scenario->delay = $entity->get('delay');
-      $scenario->hideSelectors = explode(',', $entity->get('hideSelectors'));
-      $scenario->removeSelectors = explode(',', $entity->get('removeSelectors'));
-      $scenarios[] = $scenario;
-    }
-    $backstop->scenarios = $scenarios;
-
-    // Create the paths object.
-    $paths_array = explode(PHP_EOL, $this->entity->get('paths'));
-    $paths = new \stdClass();
-    foreach ($paths_array as $path) {
-      preg_match('/(\w+)\|([\w\/]+)/', $path, $path_parts);
-      $paths->{$path_parts[1]} = $path_parts[2];
-    }
-    $backstop->paths = $paths;
-
-    $backstop->report = explode(',', $this->entity->get('report'));
-    $backstop->engine = $this->entity->get('engine');
-
-    $engineOptions = new \stdClass();
-    $engineOptions->args = explode(',', $this->entity->get('engineOptions'));
-    $backstop->engineOptions = $engineOptions;
-
-    $backstop->asyncCaptureLimit = $this->entity->get('asyncCaptureLimit');
-    $backstop->asyncCompareLimit = $this->entity->get('asyncCompareLimit');
-    $backstop->debug = $this->entity->get('debug');
-    $backstop->debugWindow = $this->entity->get('debugWindow');
-
-    // Create the backstop.json file.
-    $backstop_file = fopen("/var/www/tests/backstop/backstop_{$this->entity->id()}.json", "w");
-    fwrite($backstop_file, json_encode($backstop, JSON_PRETTY_PRINT));
-    fclose($backstop_file);
-  }
-
-  private function getConfigEntities($config_name) {
-    // Get the config entity manager.
-    return \Drupal::service('entity_type.manager')
-      ->getStorage($config_name);
-
-  }
 }
