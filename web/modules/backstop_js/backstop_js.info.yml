@@ -1,0 +1,7 @@
+name: BackstopJS
+type: module
+description: Adds visual regression testing via BackstopJS.
+package: Development
+core: 8.x
+core_version_requirement: ^8 || ^9
+configure: backstop_js.settings_form

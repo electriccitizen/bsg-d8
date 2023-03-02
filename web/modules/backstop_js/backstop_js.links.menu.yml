@@ -1,0 +1,26 @@
+backstop_js.settings_form:
+  title: BackstopJS
+  description: Configure BackstopJS.
+  parent: system.admin_config_development
+  route_name: backstop_js.settings_form
+
+entity.backstop_report.overview:
+  title: Backstop Reports
+  parent: backstop_js.settings_form
+  description: 'List of backstop reports to extend site functionality.'
+  route_name: entity.backstop_report.collection
+  weight: 1
+
+entity.backstop_scenario.overview:
+  title: Backstop Scenarios
+  parent: backstop_js.settings_form
+  description: 'List of backstop scenarios to extend site functionality.'
+  route_name: entity.backstop_scenario.collection
+  weight: 2
+
+entity.backstop_viewport.overview:
+  title: Backstop Viewports
+  parent: backstop_js.settings_form
+  description: 'List of backstop viewports to extend site functionality.'
+  route_name: entity.backstop_viewport.collection
+  weight: 3

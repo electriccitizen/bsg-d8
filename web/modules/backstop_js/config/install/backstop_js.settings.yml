@@ -1,0 +1,11 @@
+backstop_directory: '/tests/backstop'
+use_defaults: 1
+onBeforeScript: 'puppet/onBefore.js'
+paths: "bitmaps_reference|backstop_data/bitmaps_reference\r\nbitmaps_test|backstop_data/bitmaps_test\r\nhtml_report|backstop_data/html_report\r\nci_report|backstop_data/ci_report"
+report: 'browser'
+engine: 'puppeteer'
+engineOptions: '--no-sandbox'
+asyncCaptureLimit: 5
+asyncCompareLimit: 50
+debug: 0
+debugWindow: 0
