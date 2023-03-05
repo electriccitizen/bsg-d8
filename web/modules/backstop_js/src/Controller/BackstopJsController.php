@@ -2,9 +2,14 @@
 
 namespace Drupal\backstop_js\Controller;
 
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\node\Entity\Node;
+use Laminas\Diactoros\Response\JsonResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Returns responses for BackstopJS routes.
@@ -102,4 +107,32 @@ class BackstopJsController extends ControllerBase {
     return $markup;
   }
 
+  public function scenarioAutocomplete(Request $request) {
+    $results = [];
+
+    $keyword = Xss::filter($request->query->get('q'));
+    if (empty($keyword)) {
+      return new JsonResponse($results);
+    }
+
+    $query = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('title', $keyword, 'CONTAINS')
+      ->sort('title', 'ASC')
+      ->range(0, 10);
+
+    $ids = $query->execute();
+    $items = Node::loadMultiple($ids);
+
+    foreach ($items as $item) {
+      $label = [];
+      $label[] = $item->getTitle();
+      $results[] = [
+        'value' => EntityAutocomplete::getEntityLabels([$item]),
+        'label' => implode(', ', $label),
+      ];
+    }
+    return new JsonResponse($results);
+  }
 }

@@ -15,8 +15,8 @@ class BackstopScenarioListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header['label'] = $this->t('Label');
-    $header['id'] = $this->t('Machine name');
-    $header['status'] = $this->t('Status');
+    $header['id'] = $this->t('ID');
+    $header['bundle'] = $this->t('Bundle');
     return $header + parent::buildHeader();
   }
 
@@ -27,7 +27,7 @@ class BackstopScenarioListBuilder extends ConfigEntityListBuilder {
     /** @var \Drupal\backstop_scenario\BackstopScenarioInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
-    $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');
+    $row['bundle'] = $entity->get('bundle');
     return $row + parent::buildRow($entity);
   }
 

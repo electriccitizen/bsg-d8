@@ -2,8 +2,11 @@
 
 namespace Drupal\backstop_js\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Backstop Scenario form.
@@ -23,37 +26,87 @@ class BackstopScenarioForm extends EntityForm {
     $server = $_SERVER;
     $site = "{$server['REQUEST_SCHEME']}://{$server['SERVER_NAME']}";
 
+
     $form['label'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Label'),
-      '#maxlength' => 255,
-      '#default_value' => $this->entity->label(),
-      '#description' => $this->t('The title (or an easy reference name) of the page you want to test. This value is arbitrary.'),
-      '#description_display' => 'before',
-      '#required' => TRUE,
+      '#title' => t('Label'),
+      '#default_value' => $this->entity->get('label'),
+      '#autocomplete_route_name' => 'backstop_js.autocomplete',
+      '#ajax' => [
+        'callback' => '::populate',
+        'event' => 'autocompleteclose',
+      ],
       '#attributes' => [
-        'placeholder' => 'Page Title',
-      ]
+        'disabled' => !$this->entity->isNew(),
+      ],
     ];
 
+//    $form['page'] = [
+//      '#type' => 'entity_autocomplete',
+//      '#title' => t('Page'),
+//      '#description' => t('Select a page to test.'),
+//      '#description_display' => 'before',
+//      '#default_value' => $this->entity->get('page') ? Node::load($this->entity->get('page')) : NULL,
+////      '#default_value' => $this->entity->get('page'),
+//      '#target_type' => 'node',
+//    ];
+
+//    $form['label'] = [
+//      '#type' => 'textfield',
+//      '#title' => $this->t('Label'),
+//      '#target_type' => 'node',
+////      '#autocomplete_route_name' => 'backstop_js.autocomplete',
+//      '#ajax' => [
+//        'callback' => '::populateUrl',
+//        'event' => 'autocompleteclose',
+//      ],
+//      '#maxlength' => 255,
+//      '#default_value' => $this->entity->label(),
+////      '#description' => $this->t('The title (or an easy reference name) of the page you want to test. This value is arbitrary.'),
+////      '#description_display' => 'before',
+//      '#required' => TRUE,
+//      '#attributes' => [
+//        'placeholder' => 'Page Title',
+////        'disabled' => 'disabled',
+//      ]
+//    ];
+
+//    $form['id'] = [
+//      '#type' => 'machine_name',
+//      '#default_value' => $this->entity->id(),
+//      '#machine_name' => [
+//        'exists' => '\Drupal\backstop_js\Entity\BackstopScenario::load',
+//        'source' => [
+//          'scenario'
+//        ]
+//      ],
+//      '#disabled' => !$this->entity->isNew(),
+////      '#ajax' => [
+////        'callback' => '::fixIdField',
+////        'event' => 'change',
+////      ]
+//    ];
+
     $form['id'] = [
-      '#type' => 'machine_name',
+      '#type' => 'textfield',
       '#default_value' => $this->entity->id(),
-      '#machine_name' => [
-        'exists' => '\Drupal\backstop_js\Entity\BackstopScenario::load',
+      '#required' => TRUE,
+      '#attributes' => [
+        'hidden' => 'hidden',
+        'disabled' => !$this->entity->isNew(),
       ],
-      '#disabled' => !$this->entity->isNew(),
     ];
 
     $form['url'] = [
       '#type' => 'url',
       '#title' => $this->t('URL'),
       '#default_value' => $this->entity->get('url') ?? $site,
-      '#description' => $this->t('The URL of the page you want to test in this scenario.'),
+//      '#description' => $this->t('The URL of the page you want to test in this scenario.'),
       '#description_display' => 'before',
       '#required' => TRUE,
       '#attributes' => [
         'placeholder' => 'http://dev-site.com/node/[nid]',
+        'disabled' => !$this->entity->isNew(),
       ],
     ];
     $form['referenceUrl'] = [
@@ -64,6 +117,16 @@ class BackstopScenarioForm extends EntityForm {
       '#description_display' => 'before',
       '#attributes' => [
         'placeholder' => 'http://prod-site.com/node/[nid]',
+      ],
+    ];
+
+    $form['bundle'] = [
+      '#type' => 'textfield',
+      '#default_value' => $this->entity->get('bundle'),
+      '#required' => TRUE,
+      '#attributes' => [
+        'hidden' => 'hidden',
+        'disabled' => !$this->entity->isNew(),
       ],
     ];
 
@@ -340,7 +403,13 @@ class BackstopScenarioForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+//    $id = $form_state->getValue('id');
+//    if ($this->entity->isNew() && str_ends_with($id, '_')) {
+//      $form_state->setValue('id', rtrim($id, '_'));
+//    }
+
     $result = parent::save($form, $form_state);
+//    dpm($form_state->getValue('id'));
     $message_args = ['%label' => $this->entity->label()];
     $message = $result == SAVED_NEW
       ? $this->t('Created new backstop scenario %label.', $message_args)
@@ -349,5 +418,32 @@ class BackstopScenarioForm extends EntityForm {
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
     return $result;
   }
+
+  public function populate(array $form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+
+    $label = $form_state->getValue('label');
+    // Isolate the nid from the label field.
+    preg_match('/([\w\s]+) \((\d+)\)$/', $label, $nid);
+    $node = Node::load($nid[2]);
+
+    if (!empty($label) && isset($nid[1])) {
+      // Set the value of the bundle field.
+      $response->addCommand(new InvokeCommand('#edit-bundle', 'val', [$node->bundle()]));
+      // Set the value of url using the nid value.
+      if (!preg_match('/node\/\d+$/', $this->entity->get('url'))) {
+        $response->addCommand(new InvokeCommand('#edit-url', 'val', ["{$this->entity->get('url')}/node/$nid[2]"]));
+      }
+      else {
+        preg_match('/([\:\w\.\/-]+)\/\d+$/', $this->entity->get('url'), $url);
+        $response->addCommand(new InvokeCommand('#edit-url', 'val', ["$url[1]/$nid[2]"]));
+      }
+      // Set the value of id to the nid.
+      $response->addCommand(new InvokeCommand('#edit-id', 'val', ["nid_$nid[2]"]));
+//      $response->addCommand(new InvokeCommand('#edit-cookiepath', 'val', [$form_state->getValue('id')]));
+    }
+    return $response;
+  }
+
 
 }

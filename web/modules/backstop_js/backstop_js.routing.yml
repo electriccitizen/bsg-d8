@@ -40,6 +40,14 @@ entity.backstop_viewport.delete_form:
     _permission: 'administer backstop_viewport'
 
 # Backstop Scenario routing.
+backstop_js.autocomplete:
+  path: 'backstop-js/scenario/autocomplete'
+  defaults:
+    _controller: '\Drupal\backstop_js\Controller\BackstopJsController::scenarioAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
 entity.backstop_scenario.collection:
   path: '/admin/config/development/backstop-js/scenarios'
   defaults:
@@ -106,6 +114,7 @@ entity.backstop_report.delete_form:
   requirements:
     _permission: 'administer backstop_report'
 
+# Backstop Commands tob routing.
 backstop_js.commands:
   path: 'admin/config/development/backstop-js/commands'
   defaults:

@@ -16,7 +16,9 @@ function backstop_js_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $fo
   if (
     $form_id == 'backstop_js_settings' ||
     $form_id == 'backstop_report_add_form' ||
-    $form_id == 'backstop_report_edit_form'
+    $form_id == 'backstop_report_edit_form' ||
+    $form_id == 'backstop_scenario_add_form' ||
+    $form_id == 'backstop_scenario_edit_form'
   ) {
     $form['#attached']['library'][] = 'backstop_js/backstop_forms';
   }

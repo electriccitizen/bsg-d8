@@ -40,9 +40,11 @@ use Drupal\backstop_js\BackstopScenarioInterface;
  *     "uuid" = "uuid"
  *   },
  *   config_export = {
+ *     "page",
  *     "id",
  *     "label",
  *     "description",
+ *     "bundle",
  *     "onBeforeScript",
  *     "cookiePath",
  *     "url",
@@ -74,6 +76,13 @@ use Drupal\backstop_js\BackstopScenarioInterface;
 class BackstopScenario extends ConfigEntityBase implements BackstopScenarioInterface {
 
   /**
+   * The nid of the page to test.
+   *
+   * @var int
+   */
+  protected $page;
+
+  /**
    * The backstop scenario ID.
    *
    * @var string
@@ -101,6 +110,13 @@ class BackstopScenario extends ConfigEntityBase implements BackstopScenarioInter
    * @var string
    */
   protected $description;
+
+  /**
+   * The bundle name of the referenced node.
+   *
+   * @var string
+   */
+  protected $bundle;
 
   /**
    * Used to set up browser state e.g. cookies.
