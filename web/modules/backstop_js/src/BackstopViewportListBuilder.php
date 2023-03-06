@@ -16,7 +16,7 @@ class BackstopViewportListBuilder extends ConfigEntityListBuilder {
   public function buildHeader() {
     $header['label'] = $this->t('Label');
     $header['id'] = $this->t('Machine name');
-    $header['status'] = $this->t('Status');
+    $header['size'] = $this->t('Size');
     return $header + parent::buildHeader();
   }
 
@@ -27,7 +27,7 @@ class BackstopViewportListBuilder extends ConfigEntityListBuilder {
     /** @var \Drupal\backstop_viewport\BackstopViewportInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
-    $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');
+    $row['size'] = "{$entity->get('width')}w x {$entity->get('height')}h";
     return $row + parent::buildRow($entity);
   }
 
