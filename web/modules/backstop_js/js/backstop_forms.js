@@ -6,15 +6,12 @@
 
       defaults.addEventListener('change', (e) => {
         advanced_settings.forEach((field) => {
-          if (defaults.checked) {
-            field.setAttribute('disabled', true);
-            field.closest('.form-item').classList.add('form-disabled');
-            return;
+          if (!defaults.checked) {
+            field.removeAttribute('disabled');
+            field.closest('.form-item').classList.remove('form-disabled');
           }
-          field.removeAttribute('disabled');
-          field.closest('.form-item').classList.remove('form-disabled');
-        });
-      });
+        })
+      })
     }
   }
 })(jQuery, Drupal);

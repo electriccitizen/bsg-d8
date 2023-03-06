@@ -2,9 +2,12 @@
 
 namespace Drupal\backstop_js\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Serialization\Yaml;
 
 /**
  * Configure BackstopJS settings for this site.
@@ -45,7 +48,12 @@ class SettingsForm extends ConfigFormBase {
     $form['use_defaults'] = [
       '#type' => 'checkbox',
       '#title' => t('Use Backstop defaults'),
+      '#description' => t('Checking this box will populate the Advanced Settings fields with module defaults. The values will not be saved until you click the Save Configuration button below.'),
       '#default_value' => $config->get('use_defaults'),
+      '#ajax' => [
+        'callback' => '::populateDefaults',
+        'event' => 'change',
+      ],
     ];
     $form['advanced_settings'] = [
       '#type' => 'details',
@@ -176,7 +184,6 @@ class SettingsForm extends ConfigFormBase {
         $report_directory,
         FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS
       );
-
     }
 
     $this->config('backstop_js.settings')
@@ -193,6 +200,37 @@ class SettingsForm extends ConfigFormBase {
       ->set('debugWindow', $form_state->getValue('debugWindow'))
       ->save();
     parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * Repopulate the advanced settings fields with defaults provided from the
+   * module's config/install/backstop_js.settings.defaults.yml file.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   */
+  public function populateDefaults() {
+    $response = new AjaxResponse();
+
+    $module_path = \Drupal::moduleHandler()->getModule('backstop_js')->getPath();
+    // Get the module default values.
+    $file_path = DRUPAL_ROOT . '/' . $module_path . '/config/install/backstop_js.settings.defaults.yml';
+    $settings_file = file_get_contents($file_path);
+    $settings_yml = Yaml::decode($settings_file);
+
+    // Reset the Advanced Settings fields with module defaults.
+    $response->addCommand(new InvokeCommand('#edit-onbeforescript', 'val', [$settings_yml['onBeforeScript']]));
+    $response->addCommand(new InvokeCommand('#edit-paths', 'val', [$settings_yml['paths']]));
+    $response->addCommand(new InvokeCommand('#edit-report', 'val', [$settings_yml['report']]));
+    $response->addCommand(new InvokeCommand('#edit-engine', 'val', [$settings_yml['engine']]));
+    $response->addCommand(new InvokeCommand('#edit-engineoptions', 'val', [$settings_yml['engineOptions']]));
+    $response->addCommand(new InvokeCommand('#edit-asynccapturelimit', 'val', [$settings_yml['asyncCaptureLimit']]));
+    $response->addCommand(new InvokeCommand('#edit-asynccomparelimit', 'val', [$settings_yml['asyncCompareLimit']]));
+    $response->addCommand(new InvokeCommand('#edit-debug', 'val', [$settings_yml['debug']]));
+    $response->addCommand(new InvokeCommand('#edit-debug', 'removeAttr', ['checked']));
+    $response->addCommand(new InvokeCommand('#edit-debugwindow', 'val', [$settings_yml['debugWindow']]));
+    $response->addCommand(new InvokeCommand('#edit-debugwindow', 'removeAttr', ['checked']));
+
+    return $response;
   }
 
 }

@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Serialization\Yaml;
 use Drupal\node\Entity\Node;
 use Laminas\Diactoros\Response\JsonResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -59,7 +60,6 @@ class BackstopJsController extends ControllerBase {
     return $build;
   }
 
-
   /**
    * Returns the report directories within the backstop directory.
    *
@@ -107,6 +107,15 @@ class BackstopJsController extends ControllerBase {
     return $markup;
   }
 
+  /**
+   * Provides the autocomplete results when creating backstop scenarios.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *
+   * @return \Laminas\Diactoros\Response\JsonResponse
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
   public function scenarioAutocomplete(Request $request) {
     $results = [];
 
