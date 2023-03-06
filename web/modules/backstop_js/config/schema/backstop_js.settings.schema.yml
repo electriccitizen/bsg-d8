@@ -5,6 +5,9 @@ backstop_js.settings:
     backstop_directory:
       type: string
       label: Backstop Directory
+    use_defaults:
+      type: boolean
+      label: Use Backstop Defaults
     onBeforeScript:
       type: string
       label: onBeforeScript
