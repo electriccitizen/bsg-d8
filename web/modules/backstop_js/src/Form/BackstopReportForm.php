@@ -74,13 +74,13 @@ class BackstopReportForm extends EntityForm {
       '#description' => t('Select the scenarios to include in this report.'),
       '#description_display' => 'before',
       '#options' => $this->getConfig('backstop_scenario'),
-      '#default_value' => $this->entity->get('scenarios') ?? [],
+      '#default_value' => ($this->entity->get('scenarios')) ?? [],
       '#suffix' => $scenario_link->toString()->getGeneratedLink(),
     ];
-    $form['use_defaults'] = [
+    $form['use_globals'] = [
       '#type' => 'checkbox',
-      '#title' => t('Use Backstop defaults'),
-      '#default_value' => $this->entity->get('use_defaults') ?? TRUE,
+      '#title' => t('Use global settings'),
+      '#default_value' => $this->entity->get('use_globals') ?? TRUE,
     ];
     $form['advanced_settings'] = [
       '#type' => 'details',
@@ -218,8 +218,13 @@ class BackstopReportForm extends EntityForm {
     // Create the array of configs.
     $config_list = [];
     foreach ($configs as $config) {
+      if ($config_name == 'backstop_scenario') {
+        $config_list[$config->id()] = ucfirst($config->get('bundle')) . ": {$config->label()}";
+        continue;
+      }
       $config_list[$config->id()] = $config->label();
     }
+    asort($config_list);
     return $config_list;
   }
 

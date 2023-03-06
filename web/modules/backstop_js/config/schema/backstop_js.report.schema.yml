@@ -12,6 +12,8 @@ backstop_report.backstop_report.*:
       type: string
     description:
       type: string
+    use_globals:
+      type: boolean
     viewports:
       type: sequence
       label: Viewports
@@ -35,7 +37,7 @@ backstop_report.backstop_report.*:
       label: engineOptions
     asyncCaptureLimit:
       type: integer
-      lable: asyncCaptureLimit
+      label: asyncCaptureLimit
     asyncCompareLimit:
       type: integer
       label: asyncCompareList

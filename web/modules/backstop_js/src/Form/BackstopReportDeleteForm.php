@@ -23,19 +23,30 @@ class BackstopReportDeleteForm extends \Drupal\Core\Entity\EntityConfirmFormBase
     return $this->t('Delete Report');
   }
 
+  /**
+   * @inheritdoc
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Delete the entity.
+    if ($this->removeReportFile()) {
+      $this->entity->delete();
+      parent::submitForm($form, $form_state);
+    }
+  }
+
+  /**
+   * Remove the backstop.json file from the file system.
+   *
+   * @return mixed
+   */
+  private function removeReportFile() {
     /** @var FileSystemInterface $file_system */
     $file_system = \Drupal::service('file_system');
 
     // Delete the backstop.json file and its parent directory.
     $project_dir = dirname(DRUPAL_ROOT);
     $backstop_dir = \Drupal::config('backstop_js.settings')->get('backstop_directory');
-    $file_system->deleteRecursive($project_dir . "$backstop_dir/{$this->entity->id()}");
-
-    // Delete the entity.
-    $this->entity->delete();
-    parent::submitForm($form, $form_state);
+    return $file_system->deleteRecursive($project_dir . "$backstop_dir/{$this->entity->id()}");
   }
-
 
 }

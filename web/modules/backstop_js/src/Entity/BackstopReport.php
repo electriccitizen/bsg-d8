@@ -46,7 +46,7 @@ use Drupal\Core\File\FileSystemInterface;
  *     "id",
  *     "label",
  *     "description",
- *     "use_defaults",
+ *     "use_globals",
  *     "viewports",
  *     "onBeforeScript",
  *     "scenarios",
@@ -96,7 +96,7 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
    *
    * @var bool
    */
-  protected $use_defaults;
+  protected $use_globals;
 
   /**
    * List of viewports included in this report.
