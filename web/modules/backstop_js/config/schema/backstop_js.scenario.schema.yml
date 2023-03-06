@@ -2,6 +2,9 @@ backstop_scenario.backstop_scenario.*:
   type: config_entity
   label: Backstop Scenario
   mapping:
+    page:
+      type: integer
+      label: Page
     id:
       type: string
       label: ID
