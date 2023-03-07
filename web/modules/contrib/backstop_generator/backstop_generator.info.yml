@@ -1,0 +1,7 @@
+name: Backstop Generator
+type: module
+description: Generates backstop.json files for visual-regression testing.
+package: Development
+core: 9.x
+core_version_requirement: ^9 || ^10
+configure: backstop_generator.settings_form
