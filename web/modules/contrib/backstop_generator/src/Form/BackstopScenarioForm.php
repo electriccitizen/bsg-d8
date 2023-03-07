@@ -11,7 +11,7 @@ use Drupal\node\Entity\Node;
 /**
  * Backstop Scenario form.
  *
- * @property \Drupal\backstop_scenario\BackstopScenarioInterface $entity
+ * @property \Drupal\backstop_generator\BackstopScenarioInterface $entity
  */
 class BackstopScenarioForm extends EntityForm {
 

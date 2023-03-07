@@ -5,25 +5,25 @@ backstop_generator.settings_form:
   route_name: backstop_generator.settings_form
 
 #entity.backstop_report.overview:
-backstop_generator.report.overview:
+entity.backstop_report.overview:
   title: Backstop Reports
-  parent: backstop_genrator.settings_form
+  parent: backstop_generator.settings_form
   description: 'List of backstop reports to extend site functionality.'
-  route_name: backstop_generator.report.collection
+  route_name: entity.backstop_report.collection
   weight: 1
 
 #entity.backstop_scenario.overview:
-backstop_generator.scenario.overview:
+entity.backstop_scenario.overview:
   title: Backstop Scenarios
   parent: backstop_generator.settings_form
   description: 'List of backstop scenarios to extend site functionality.'
-  route_name: backstop_generator.scenario.collection
+  route_name: entity.backstop_scenario.collection
   weight: 2
 
 #entity.backstop_viewport.overview:
-backstop_generator.viewport.overview:
+entity.backstop_viewport.overview:
   title: Backstop Viewports
   parent: backstop_generator.settings_form
   description: 'List of backstop viewports to extend site functionality.'
-  route_name: backstop_generator.viewport.collection
+  route_name: entity.backstop_viewport.collection
   weight: 3

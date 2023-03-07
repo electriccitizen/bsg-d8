@@ -24,7 +24,7 @@ class BackstopScenarioListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /** @var \Drupal\backstop_scenario\BackstopScenarioInterface $entity */
+    /** @var \Drupal\backstop_generator\BackstopScenarioInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
     $row['bundle'] = $entity->get('bundle');

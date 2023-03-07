@@ -1,5 +1,5 @@
 backstop_generator.settings_form:
-  path: '/admin/config/system/development/backstop-generator'
+  path: '/admin/config/development/backstop-generator'
   defaults:
     _title: 'Backstop Generator settings'
     _form: 'Drupal\backstop_generator\Form\SettingsForm'
@@ -7,7 +7,7 @@ backstop_generator.settings_form:
     _permission: 'administer backstop_generator'
 
 # Backstop Viewport routing.
-backstop_generator.viewport.collection:
+entity.backstop_viewport.collection:
   path: '/admin/config/development/backstop-generator/viewports'
   defaults:
     _entity_list: 'backstop_viewport'
@@ -15,7 +15,7 @@ backstop_generator.viewport.collection:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.viewport.add_form:
+entity.backstop_viewport.add_form:
   path: '/admin/config/development/backstop-generator/viewport/add'
   defaults:
     _entity_form: 'backstop_viewport.add'
@@ -23,15 +23,15 @@ backstop_generator.viewport.add_form:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.viewport.edit_form:
+entity.backstop_viewport.edit_form:
   path: '/admin/config/development/backstop-generator/viewport/{backstop_viewport}'
   defaults:
     _entity_form: 'backstop_viewport.edit'
     _title: 'Edit a backstop viewport'
   requirements:
-    _permission: 'administer backstop_generator'
+    _permission: 'administer backstop_generatorentity.'
 
-backstop_generator.viewport.delete_form:
+entity.backstop_viewport.delete_form:
   path: '/admin/config/development/backstop-generator/viewport/{backstop_viewport}/delete'
   defaults:
     _entity_form: 'backstop_viewport.delete'
@@ -48,7 +48,7 @@ backstop_generator.autocomplete:
   requirements:
     _access: 'TRUE'
 
-backstop_generator.scenario.collection:
+entity.backstop_scenario.collection:
   path: '/admin/config/development/backstop-generator/scenarios'
   defaults:
     _entity_list: 'backstop_scenario'
@@ -56,7 +56,7 @@ backstop_generator.scenario.collection:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.scenario.add_form:
+entity.backstop_scenario.add_form:
   path: '/admin/config/development/backstop-generator/scenario/add'
   defaults:
     _entity_form: 'backstop_scenario.add'
@@ -64,7 +64,7 @@ backstop_generator.scenario.add_form:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.scenario.edit_form:
+entity.backstop_scenario.edit_form:
   path: '/admin/config/development/backstop-generator/scenario/{backstop_scenario}'
   defaults:
     _entity_form: 'backstop_scenario.edit'
@@ -72,7 +72,7 @@ backstop_generator.scenario.edit_form:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.scenario.delete_form:
+entity.backstop_scenario.delete_form:
   path: '/admin/config/development/backstop-generator/scenario/{backstop_scenario}/delete'
   defaults:
     _entity_form: 'backstop_scenario.delete'
@@ -82,7 +82,7 @@ backstop_generator.scenario.delete_form:
 
 
 # Backstop Report routing.
-backstop_generator.report.collection:
+entity.backstop_report.collection:
   path: '/admin/config/development/backstop-generator/reports'
   defaults:
     _entity_list: 'backstop_report'
@@ -90,7 +90,7 @@ backstop_generator.report.collection:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.report.add_form:
+entity.backstop_report.add_form:
   path: '/admin/config/development/backstop-generator/report/add'
   defaults:
     _entity_form: 'backstop_report.add'
@@ -98,7 +98,7 @@ backstop_generator.report.add_form:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.report.edit_form:
+entity.backstop_report.edit_form:
   path: '/admin/config/development/backstop-generator/report/{backstop_report}'
   defaults:
     _entity_form: 'backstop_report.edit'
@@ -106,7 +106,7 @@ backstop_generator.report.edit_form:
   requirements:
     _permission: 'administer backstop_generator'
 
-backstop_generator.report.delete_form:
+entity.backstop_report.delete_form:
   path: '/admin/config/development/backstop-generator/report/{backstop_report}/delete'
   defaults:
     _entity_form: 'backstop_report.delete'

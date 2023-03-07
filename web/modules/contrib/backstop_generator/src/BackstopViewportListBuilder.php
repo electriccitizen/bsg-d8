@@ -24,7 +24,7 @@ class BackstopViewportListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /** @var \Drupal\backstop_viewport\BackstopViewportInterface $entity */
+    /** @var \Drupal\backstop_generator\BackstopViewportInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
     $row['size'] = "{$entity->get('width')}w x {$entity->get('height')}h";

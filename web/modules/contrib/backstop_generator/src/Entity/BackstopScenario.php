@@ -27,12 +27,12 @@ use Drupal\backstop_generator\BackstopScenarioInterface;
  *     }
  *   },
  *   config_prefix = "scenario",
- *   admin_permission = "administer backstop_scenario",
+ *   admin_permission = "administer backstop_generator",
  *   links = {
- *     "collection" = "/admin/config/development/backstop-js/scenarios",
- *     "add-form" = "/admin/config/development/backstop-js/scenario/add",
- *     "edit-form" = "/admin/config/development/backstop-js/scenario/{backstop_scenario}",
- *     "delete-form" = "/admin/config/development/backstop-js/scenario/{backstop_scenario}/delete"
+ *     "collection" = "/admin/config/development/backstop-generator/scenarios",
+ *     "add-form" = "/admin/config/development/backstop-generator/scenario/add",
+ *     "edit-form" = "/admin/config/development/backstop-generator/scenario/{backstop_scenario}",
+ *     "delete-form" = "/admin/config/development/backstop-generator/scenario/{backstop_scenario}/delete"
  *   },
  *   entity_keys = {
  *     "id" = "id",

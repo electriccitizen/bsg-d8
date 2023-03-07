@@ -27,12 +27,12 @@ use Drupal\backstop_generator\BackstopViewportInterface;
  *     }
  *   },
  *   config_prefix = "viewport",
- *   admin_permission = "administer backstop_viewport",
+ *   admin_permission = "administer backstop_generator",
  *   links = {
- *     "collection" = "/admin/config/development/backstop-js/viewports",
- *     "add-form" = "/admin/config/development/backstop-js/viewport/add",
- *     "edit-form" = "/admin/config/development/backstop-js/viewport/{backstop_viewport}",
- *     "delete-form" = "/admin/config/development/backstop-js/viewport/{backstop_viewport}/delete"
+ *     "collection" = "/admin/config/development/backstop-generator/viewports",
+ *     "add-form" = "/admin/config/development/backstop-generator/viewport/add",
+ *     "edit-form" = "/admin/config/development/backstop-generator/viewport/{backstop_viewport}",
+ *     "delete-form" = "/admin/config/development/backstop-generator/viewport/{backstop_viewport}/delete"
  *   },
  *   entity_keys = {
  *     "id" = "id",

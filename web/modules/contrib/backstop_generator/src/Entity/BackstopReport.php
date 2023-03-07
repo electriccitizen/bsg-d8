@@ -30,12 +30,12 @@ use Drupal\Core\File\FileSystemInterface;
  *     }
  *   },
  *   config_prefix = "report",
- *   admin_permission = "administer backstop_report",
+ *   admin_permission = "administer backstop_generator",
  *   links = {
- *     "collection" = "/admin/config/development/backstop-js/reports",
- *     "add-form" = "/admin/config/development/backstop-js/report/add",
- *     "edit-form" = "/admin/config/development/backstop-js/report/{backstop_report}",
- *     "delete-form" = "/admin/config/development/backstop-js/report/{backstop_report}/delete"
+ *     "collection" = "/admin/config/development/backstop-generator/reports",
+ *     "add-form" = "/admin/config/development/backstop-generator/report/add",
+ *     "edit-form" = "/admin/config/development/backstop-generator/report/{backstop_report}",
+ *     "delete-form" = "/admin/config/development/backstop-generator/report/{backstop_report}/delete"
  *   },
  *   entity_keys = {
  *     "id" = "id",

@@ -4,8 +4,9 @@ namespace Drupal\backstop_generator\Form;
 
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityConfirmFormBase;
 
-class BackstopReportDeleteForm extends \Drupal\Core\Entity\EntityConfirmFormBase {
+class BackstopReportDeleteForm extends EntityConfirmFormBase {
 
   /**
    * @inheritDoc

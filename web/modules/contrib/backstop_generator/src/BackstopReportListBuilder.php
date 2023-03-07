@@ -16,7 +16,7 @@ class BackstopReportListBuilder extends ConfigEntityListBuilder {
   public function buildHeader() {
     $header['label'] = $this->t('Label');
     $header['id'] = $this->t('Machine name');
-    $header['status'] = $this->t('Status');
+//    $header['status'] = $this->t('Status');
     return $header + parent::buildHeader();
   }
 
@@ -24,10 +24,10 @@ class BackstopReportListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /** @var \Drupal\backstop_report\BackstopReportInterface $entity */
+    /** @var \Drupal\backstop_generator\BackstopReportInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
-    $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');
+//    $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');
     return $row + parent::buildRow($entity);
   }
 

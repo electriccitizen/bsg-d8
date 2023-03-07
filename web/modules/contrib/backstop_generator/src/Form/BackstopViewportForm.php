@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Backstop Viewport form.
  *
- * @property \Drupal\backstop_viewport\BackstopViewportInterface $entity
+ * @property \Drupal\backstop_generator\BackstopViewportInterface $entity
  */
 class BackstopViewportForm extends EntityForm {
 
@@ -37,11 +37,11 @@ class BackstopViewportForm extends EntityForm {
       '#disabled' => !$this->entity->isNew(),
     ];
 
-    $form['status'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Enabled'),
-      '#default_value' => $this->entity->status(),
-    ];
+//    $form['status'] = [
+//      '#type' => 'checkbox',
+//      '#title' => $this->t('Enabled'),
+//      '#default_value' => $this->entity->status(),
+//    ];
 
 //    $form['description'] = [
 //      '#type' => 'textarea',
@@ -77,7 +77,7 @@ class BackstopViewportForm extends EntityForm {
       : $this->t('Updated backstop viewport %label.', $message_args);
     $this->messenger()->addStatus($message);
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
-    dpm($result);
+
     return $result;
   }
 
