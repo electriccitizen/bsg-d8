@@ -12,14 +12,14 @@
 /**
  * Implements hook_form_alter().
  */
-function backstop_js_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function backstop_generator_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if (
-    $form_id == 'backstop_js_settings' ||
-    $form_id == 'backstop_report_add_form' ||
-    $form_id == 'backstop_report_edit_form' ||
-    $form_id == 'backstop_scenario_add_form' ||
-    $form_id == 'backstop_scenario_edit_form'
+    $form_id == 'backstop_generator_settings' ||
+    $form_id == 'backstop_generator_report_add_form' ||
+    $form_id == 'backstop_generator_report_edit_form' ||
+    $form_id == 'backstop_generator_scenario_add_form' ||
+    $form_id == 'backstop_generator_scenario_edit_form'
   ) {
-    $form['#attached']['library'][] = 'backstop_js/backstop_forms';
+    $form['#attached']['library'][] = 'backstop_generator/backstop_forms';
   }
 }
