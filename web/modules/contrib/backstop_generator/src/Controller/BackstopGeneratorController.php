@@ -1,12 +1,11 @@
 <?php
 
-namespace Drupal\backstop_js\Controller;
+namespace Drupal\backstop_generator\Controller;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Serialization\Yaml;
 use Drupal\node\Entity\Node;
 use Laminas\Diactoros\Response\JsonResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Returns responses for BackstopJS routes.
  */
-class BackstopJsController extends ControllerBase {
+class BackstopGeneratorController extends ControllerBase {
 
   /**
    * The file system service.
@@ -66,7 +65,7 @@ class BackstopJsController extends ControllerBase {
    * @return array|false
    */
   private function getBackstopReportDirectories() {
-    $directory = \Drupal::config('backstop_js.settings')->get('backstop_directory');
+    $directory = \Drupal::config('backstop_generator.settings')->get('backstop_directory');
     $directory = dirname(DRUPAL_ROOT) . $directory;
 
     $files = is_dir($directory) ? scandir($directory) : [];
@@ -90,7 +89,7 @@ class BackstopJsController extends ControllerBase {
    */
   private function detailMarkup() {
     $report_dirs = $this->getBackstopReportDirectories();
-    $directory = \Drupal::config('backstop_js.settings')->get('backstop_directory');
+    $directory = \Drupal::config('backstop_generator.settings')->get('backstop_directory');
 
     $markup = "<div class=\"test-code-paths\">";
     foreach ($report_dirs as $dir) {
