@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\backstop_js;
+namespace Drupal\backstop_generator;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
