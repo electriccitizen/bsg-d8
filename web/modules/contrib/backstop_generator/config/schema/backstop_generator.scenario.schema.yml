@@ -1,4 +1,4 @@
-backstop_scenario.backstop_scenario.*:
+backstop_generator.backstop_scenario.*:
   type: config_entity
   label: Backstop Scenario
   mapping:

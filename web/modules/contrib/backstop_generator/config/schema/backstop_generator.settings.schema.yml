@@ -1,4 +1,4 @@
-backstop_js.settings:
+backstop_generator.settings:
   type: config_entity
   label: Backstop Settings
   mapping:

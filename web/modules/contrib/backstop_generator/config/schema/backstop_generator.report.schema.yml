@@ -1,4 +1,4 @@
-backstop_report.backstop_report.*:
+backstop_generator.backstop_report.*:
   type: config_entity
   label: Backstop Report
   mapping:

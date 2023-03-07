@@ -1,4 +1,4 @@
-backstop_viewport.backstop_viewport.*:
+backstop_generator.backstop_viewport.*:
   type: config_entity
   label: Backstop Viewport
   mapping:
