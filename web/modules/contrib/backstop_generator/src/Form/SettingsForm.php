@@ -266,7 +266,6 @@ class SettingsForm extends ConfigFormBase {
         if (!$report_config->get('use_globals')) {
           continue;
         }
-        $report_config->
 
         // Update the config values and save.
         $report_config->set('onBeforeScript', $settings->get('onBeforeScript'))
