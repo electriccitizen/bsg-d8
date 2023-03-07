@@ -23,7 +23,7 @@ use Drupal\backstop_generator\BackstopScenarioInterface;
  *     "form" = {
  *       "add" = "Drupal\backstop_generator\Form\BackstopScenarioForm",
  *       "edit" = "Drupal\backstop_generator\Form\BackstopScenarioForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
+ *       "delete" = "Drupal\backstop_generator\Form\BackstopScenarioDeleteForm"
  *     }
  *   },
  *   config_prefix = "scenario",

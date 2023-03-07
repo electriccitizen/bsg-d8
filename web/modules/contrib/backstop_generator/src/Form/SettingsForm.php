@@ -2,6 +2,7 @@
 
 namespace Drupal\backstop_generator\Form;
 
+use Drupal\backstop_generator\Entity\BackstopReport;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\File\FileSystemInterface;
@@ -45,7 +46,33 @@ class SettingsForm extends ConfigFormBase {
         'disabled' => 'disabled',
       ]
     ];
-    $form['use_defaults'] = [
+
+    $form['debugging'] = [
+      '#type' => 'details',
+      '#title' => t('Debugging'),
+      '#open' => FALSE,
+    ];
+    $form['debugging']['debug'] = [
+      '#type' => 'checkbox',
+      '#title' => t('debug'),
+      '#description' => t('TODO: Need description here.'),
+      '#description_display' => 'before',
+      '#default_value' => $config->get('debug') ?? FALSE,
+    ];
+    $form['debugging']['debugWindow'] = [
+      '#type' => 'checkbox',
+      '#title' => t('debugWindow'),
+      '#description' => t('TODO: Need description here.'),
+      '#description_display' => 'before',
+      '#default_value' => $config->get('debugWindow') ?? FALSE,
+    ];
+
+    $form['advanced_settings'] = [
+      '#type' => 'details',
+      '#title' => t('Advanced Settings'),
+      '#open' => FALSE,
+    ];
+    $form['advanced_settings']['use_defaults'] = [
       '#type' => 'checkbox',
       '#title' => t('Use Backstop defaults'),
       '#description' => t('Checking this box will populate the Advanced Settings fields with module defaults. The values will not be saved until you click the Save Configuration button below.'),
@@ -55,11 +82,6 @@ class SettingsForm extends ConfigFormBase {
         'event' => 'change',
       ],
     ];
-    $form['advanced_settings'] = [
-      '#type' => 'details',
-      '#title' => t('Advanced Settings'),
-      '#open' => FALSE,
-    ];
     $form['advanced_settings']['onBeforeScript'] = [
       '#type' => 'textfield',
       '#title' => t('onBeforeScript'),
@@ -67,7 +89,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('use_defaults') ? $defaults->get('onBeforeScript') : $config->get('onBeforeScript'),
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -78,7 +100,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('paths'),
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -89,7 +111,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('report') ?? 'browser',
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -100,7 +122,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('engine') ?? 'puppeteer',
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -111,7 +133,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('engineOptions') ?? '--no-sandbox',
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -122,7 +144,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('asyncCaptureLimit') ?? 5,
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -133,29 +155,7 @@ class SettingsForm extends ConfigFormBase {
       '#description_display' => 'before',
       '#default_value' => $config->get('asyncCompareLimit') ?? 50,
       '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
-        'class' => ['advanced-setting'],
-      ],
-    ];
-    $form['advanced_settings']['debug'] = [
-      '#type' => 'checkbox',
-      '#title' => t('debug'),
-      '#description' => t('TODO: Need description here.'),
-      '#description_display' => 'before',
-      '#default_value' => $config->get('debug') ?? FALSE,
-      '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
-        'class' => ['advanced-setting'],
-      ],
-    ];
-    $form['advanced_settings']['debugWindow'] = [
-      '#type' => 'checkbox',
-      '#title' => t('debugWindow'),
-      '#description' => t('TODO: Need description here.'),
-      '#description_display' => 'before',
-      '#default_value' => $config->get('debugWindow') ?? FALSE,
-      '#attributes' => [
-        'disabled' => $config->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $config->get('use_defaults') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -200,6 +200,14 @@ class SettingsForm extends ConfigFormBase {
       ->set('debugWindow', $form_state->getValue('debugWindow'))
       ->save();
     parent::submitForm($form, $form_state);
+
+    // Update the backstop.json files for reports that use global settings.
+    $updated_reports = $this->updateReports();
+    // Inform the user which backstop.json files have been updated.
+    $message = count($updated_reports) > 1 ?
+      t('The %label backstop.json files have been updated.', ['%label' => implode(', ', $updated_reports), ]) :
+      t('The %label backstop.json file has been updated.', ['%label' => implode(', ', $updated_reports), ]);
+    $this->messenger->addMessage($message);
   }
 
   /**
@@ -208,8 +216,11 @@ class SettingsForm extends ConfigFormBase {
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
-  public function populateDefaults() {
+  public function populateDefaults(array $form, FormStateInterface $formState) {
     $response = new AjaxResponse();
+    if ($formState->getValue('use_defaults') === 0) {
+      return $response;
+    }
 
     $module_path = \Drupal::moduleHandler()->getModule('backstop_generator')->getPath();
     // Get the module default values.
@@ -227,10 +238,53 @@ class SettingsForm extends ConfigFormBase {
     $response->addCommand(new InvokeCommand('#edit-asynccomparelimit', 'val', [$settings_yml['asyncCompareLimit']]));
     $response->addCommand(new InvokeCommand('#edit-debug', 'val', [$settings_yml['debug']]));
     $response->addCommand(new InvokeCommand('#edit-debug', 'removeAttr', ['checked']));
-    $response->addCommand(new InvokeCommand('#edit-debugwindow', 'val', [$settings_yml['debugWindow']]));
-    $response->addCommand(new InvokeCommand('#edit-debugwindow', 'removeAttr', ['checked']));
 
     return $response;
+  }
+
+  /**
+   * Regenerate the backstop.json files for reports that use global settings.
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  private function updateReports() {
+    $report_ids = \Drupal::entityTypeManager()
+      ->getStorage('backstop_report')
+      ->getQuery()
+      ->execute();
+    $settings = $this->config('backstop_generator.settings');
+    $regenerated_reports = [];
+
+    if (!empty($report_ids)) {
+      foreach ($report_ids as $id) {
+        // Load the report config.
+        $report_config = \Drupal::configFactory()->getEditable("backstop_generator.report.$id");
+
+        // Ignore reports using custom advanced settings.
+        if (!$report_config->get('use_globals')) {
+          continue;
+        }
+        $report_config->
+
+        // Update the config values and save.
+        $report_config->set('onBeforeScript', $settings->get('onBeforeScript'))
+          ->set('paths', $settings->get('paths'))
+          ->set('report', $settings->get('report'))
+          ->set('engine', $settings->get('engine'))
+          ->set('engineOptions', $settings->get('engineOptions'))
+          ->set('asyncCaptureLimit', $settings->get('asyncCaptureLimit'))
+          ->set('asyncCompareLimit', $settings->get('asyncCompareLimit'));
+        $report_config->save();
+
+        // Regenerate the backstop.json file.
+        $report = BackstopReport::load($id);
+        $report->generateBackstopFile($id);
+        $regenerated_reports[] = $report->label();
+      }
+    }
+    return $regenerated_reports;
   }
 
 }

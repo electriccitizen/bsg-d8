@@ -96,7 +96,7 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
    *
    * @var bool
    */
-  protected $use_globals;
+  protected $use_globals = TRUE;
 
   /**
    * List of viewports included in this report.
@@ -178,11 +178,12 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
   /**
    * @inheritdoc
    */
-  public function generateBackstopFile() {
+  public function generateBackstopFile($id = NULL) {
     $backstop = new \stdClass();
     $viewport_entities = $this->getConfigEntities('backstop_viewport');
     $scenario_entities = $this->getConfigEntities('backstop_scenario');
     $backstop_config = \Drupal::config('backstop_generator.settings');
+    $report_config = $id ? \Drupal::config("backstop_report.$id") : NULL;
 
     $backstop->id = $this->label;
 
@@ -201,7 +202,7 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
     }
     $backstop->viewports = $viewports;
 
-    $backstop->onBeforeScript = $this->onBeforeScript ?? $backstop_config->get('onBeforeScript');
+    $backstop->onBeforeScript = $this->use_globals ? $backstop_config->get('onBeforeScript') : $this->onBeforeScript;
 
     // Create the scenarios array.
     $scenarios = [];

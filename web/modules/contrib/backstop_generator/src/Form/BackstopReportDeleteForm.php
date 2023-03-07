@@ -12,7 +12,7 @@ class BackstopReportDeleteForm extends EntityConfirmFormBase {
    * @inheritDoc
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete this %label backstop report?', [
+    return $this->t('Are you sure you want to delete the %label report?', [
       '%label' => $this->entity->label(),
     ]);
   }

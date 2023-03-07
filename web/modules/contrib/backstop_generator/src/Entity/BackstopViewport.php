@@ -23,7 +23,7 @@ use Drupal\backstop_generator\BackstopViewportInterface;
  *     "form" = {
  *       "add" = "Drupal\backstop_generator\Form\BackstopViewportForm",
  *       "edit" = "Drupal\backstop_generator\Form\BackstopViewportForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
+ *       "delete" = "Drupal\backstop_generator\Form\BackstopViewportDeleteForm"
  *     }
  *   },
  *   config_prefix = "viewport",

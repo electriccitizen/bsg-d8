@@ -2,6 +2,7 @@
 
 namespace Drupal\backstop_generator\Form;
 
+use Drupal\backstop_generator\Entity\BackstopReport;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Entity\EntityForm;
@@ -416,6 +417,13 @@ class BackstopScenarioForm extends EntityForm {
       : $this->t('Updated backstop scenario %label.', $message_args);
     $this->messenger()->addStatus($message);
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
+
+    $updated_reports = $this->updateReports();
+    $update_message = count($updated_reports) > 0 ?
+      t('Updated %label backstop.json report file.', ['%label' => implode(', ', $updated_reports)]) :
+      t('No reports needed to be updated.');
+    $this->messenger->addMessage($update_message);
+
     return $result;
   }
 
@@ -445,5 +453,25 @@ class BackstopScenarioForm extends EntityForm {
     return $response;
   }
 
+  private function updateReports() {
+    // Get the report config ids.
+    $report_ids = \Drupal::entityTypeManager()
+      ->getStorage('backstop_report')
+      ->getQuery()
+      ->execute();
+    $updated_reports = [];
+
+    foreach ($report_ids as $id) {
+      // Get the report config.
+      $report_config = \Drupal::configFactory()->getEditable("backstop_generator.report.$id");
+      if (in_array($this->entity->id(), $report_config->get('scenarios'), TRUE)) {
+        // Update the backstop.json file.
+        $report = BackstopReport::load($id);
+        $report->generateBackstopFile($id);
+        $updated_reports[] = $report->label();
+      }
+    }
+    return $updated_reports;
+  }
 
 }

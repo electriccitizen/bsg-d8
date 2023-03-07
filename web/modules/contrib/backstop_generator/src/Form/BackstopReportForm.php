@@ -2,6 +2,8 @@
 
 namespace Drupal\backstop_generator\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Config\Entity\ConfigEntityStorage;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -77,24 +79,58 @@ class BackstopReportForm extends EntityForm {
       '#default_value' => ($this->entity->get('scenarios')) ?? [],
       '#suffix' => $scenario_link->toString()->getGeneratedLink(),
     ];
-    $form['use_globals'] = [
-      '#type' => 'checkbox',
-      '#title' => t('Use global settings'),
-      '#default_value' => $this->entity->get('use_globals') ?? TRUE,
+    $form['debugging'] = [
+      '#type' => 'details',
+      '#title' => t('Debugging'),
+      '#open' => FALSE,
     ];
+    $form['debugging']['debug'] = [
+      '#type' => 'checkbox',
+      '#title' => t('debug'),
+      '#description' => t('TODO: Need description here.'),
+      '#description_display' => 'before',
+      '#default_value' => $this->entity->get('debug') ?? $backstop_config->get('debug'),
+      '#attributes' => [
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
+        'class' => ['advanced-setting'],
+      ],
+    ];
+    $form['debugging']['debugWindow'] = [
+      '#type' => 'checkbox',
+      '#title' => t('debugWindow'),
+      '#description' => t('TODO: Need description here.'),
+      '#description_display' => 'before',
+      '#default_value' => $this->entity->get('debugWindow') ?? $backstop_config->get('debugWindow'),
+      '#attributes' => [
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
+        'class' => ['advanced-setting'],
+      ],
+    ];
+
     $form['advanced_settings'] = [
       '#type' => 'details',
       '#title' => t('Advanced Settings'),
       '#open' => FALSE,
+    ];
+    $form['advanced_settings']['use_globals'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Use global settings'),
+      '#description' => t('Checking this box will reset the Advanced Settings fields with the global values, but will not be saved until this Report is saved.'),
+      '#default_value' => $this->entity->get('use_globals') ?? TRUE,
+      '#ajax' => [
+        'callback' => '::useGlobalValues',
+        'event' => 'change'
+      ],
     ];
     $form['advanced_settings']['onBeforeScript'] = [
       '#type' => 'textfield',
       '#title' => t('onBeforeScript'),
       '#description' => t('TODO: Need description here'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('use_defaults') ? $backstop_config->get('onBeforeScript') : $this->entity->get('onBeforeScript'), //'puppet/onBefore.js',
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('onBeforeScript') : $this->entity->get('onBeforeScript'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -103,9 +139,10 @@ class BackstopReportForm extends EntityForm {
       '#title' => t('Paths'),
       '#description' => t('TODO: Need description here.'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('paths') ?? $backstop_config->get('paths'),
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('paths') : $this->entity->get('paths'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -114,9 +151,10 @@ class BackstopReportForm extends EntityForm {
       '#title' => t('Report'),
       '#description' => t('TODO: Need description here.'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('report') ?? $backstop_config->get('report'),
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('report') : $this->entity->get('report'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -125,9 +163,10 @@ class BackstopReportForm extends EntityForm {
       '#title' => t('Engine'),
       '#description' => t('TODO: Need description here.'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('engine') ?? $backstop_config->get('engine'),
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('engine') : $this->entity->get('engine'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -136,9 +175,10 @@ class BackstopReportForm extends EntityForm {
       '#title' => t('engineOptions'),
       '#description' => t('TODO: Need description here.'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('engineOptions') ?? $backstop_config->get('engineOptions'),
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('engineOptions') : $this->entity->get('engineOptions'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -147,9 +187,10 @@ class BackstopReportForm extends EntityForm {
       '#title' => t('asyncCaptureLimit'),
       '#description' => t('TODO: Need description here.'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('asyncCaptureLimit') ?? $backstop_config->get('asyncCaptureLimit'),
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('asyncCaptureLimit') :$this->entity->get('asyncCaptureLimit'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -158,31 +199,10 @@ class BackstopReportForm extends EntityForm {
       '#title' => t('asyncCompareLimit'),
       '#description' => t('TODO: Need description here.'),
       '#description_display' => 'before',
-      '#default_value' => $this->entity->get('asyncCompareLimit') ?? $backstop_config->get('asyncCompareLimit'),
+      '#default_value' => $this->entity->get('use_globals') ?
+        $backstop_config->get('asyncCompareLimit') : $this->entity->get('asyncCompareLimit'),
       '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
-        'class' => ['advanced-setting'],
-      ],
-    ];
-    $form['advanced_settings']['debug'] = [
-      '#type' => 'checkbox',
-      '#title' => t('debug'),
-      '#description' => t('TODO: Need description here.'),
-      '#description_display' => 'before',
-      '#default_value' => $this->entity->get('debug') ?? $backstop_config->get('debug'),
-      '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
-        'class' => ['advanced-setting'],
-      ],
-    ];
-    $form['advanced_settings']['debugWindow'] = [
-      '#type' => 'checkbox',
-      '#title' => t('debugWindow'),
-      '#description' => t('TODO: Need description here.'),
-      '#description_display' => 'before',
-      '#default_value' => $this->entity->get('debugWindow') ?? $backstop_config->get('debugWindow'),
-      '#attributes' => [
-        'disabled' => $this->entity->get('use_defaults') ? 'disabled' : NULL,
+        'readonly' => $this->entity->get('use_globals') ?? TRUE,
         'class' => ['advanced-setting'],
       ],
     ];
@@ -234,6 +254,25 @@ class BackstopReportForm extends EntityForm {
     $paths_default .= "html_report|backstop_data/html_report\n";
     $paths_default .= "ci_report|backstop_data/ci_report";
     return $paths_default;
+  }
+
+  public function useGlobalValues(array $form, FormStateInterface $formState) {
+    $response = new AjaxResponse();
+
+    if ($formState->getValue('use_globals') === 0) {
+      return $response;
+    }
+    // Get the current module settings.
+    $global_config = \Drupal::config('backstop_generator.settings');
+    $response->addCommand(new InvokeCommand('#edit-onbeforescript', 'val', [$global_config->get('onBeforeScript')]));
+    $response->addCommand(new InvokeCommand('#edit-paths', 'val', [$global_config->get('paths')]));
+    $response->addCommand(new InvokeCommand('#edit-report', 'val', [$global_config->get('report')]));
+    $response->addCommand(new InvokeCommand('#edit-engine', 'val', [$global_config->get('engine')]));
+    $response->addCommand(new InvokeCommand('#edit-engineoptions', 'val', [$global_config->get('engineOptions')]));
+    $response->addCommand(new InvokeCommand('#edit-asynccapturelimit', 'val', [$global_config->get('asyncCaptureLimit')]));
+    $response->addCommand(new InvokeCommand('#edit-asynccomparelimit', 'val', [$global_config->get('asyncCompareLimit')]));
+
+    return $response;
   }
 
 }
