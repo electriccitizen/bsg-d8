@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\backstop_js\Form;
+namespace Drupal\backstop_generator\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
@@ -18,29 +18,29 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'backstop_js_settings';
+    return 'backstop_generator_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['backstop_js.settings'];
+    return ['backstop_generator.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('backstop_js.settings');
-    $defaults = \Drupal::config('backstop_js.settings');
+    $config = $this->config('backstop_generator.settings');
+    $defaults = \Drupal::config('backstop_generator.settings');
 
     $form['backstop_directory'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Backstop Directory'),
       '#description' => t('This directory is in the <em>project</em> root, one level above your Drupal site.'),
       '#description_display' => 'before',
-      '#default_value' => $config->get('backstop_directory'), // $this->config('backstop_js.settings')->get('backstop_directory'),
+      '#default_value' => $config->get('backstop_directory'), // $this->config('backstop_generator.settings')->get('backstop_directory'),
       '#attributes' => [
         'disabled' => 'disabled',
       ]
@@ -171,7 +171,7 @@ class SettingsForm extends ConfigFormBase {
     $file_system = \Drupal::service('file_system');
 
     // If a new directory is created, delete the old directory.
-    $current_dir = $this->config('backstop_js.settings')
+    $current_dir = $this->config('backstop_generator.settings')
       ->get('backstop_directory');
     $new_dir = $form_state->getValue('backstop_directory');
     if ($current_dir && $current_dir != $new_dir) {
@@ -186,7 +186,7 @@ class SettingsForm extends ConfigFormBase {
       );
     }
 
-    $this->config('backstop_js.settings')
+    $this->config('backstop_generator.settings')
       ->set('use_defaults', $form_state->getValue('use_defaults'))
       ->set('backstop_directory', $form_state->getValue('backstop_directory'))
       ->set('onBeforeScript', $form_state->getValue('onBeforeScript'))
@@ -204,16 +204,16 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * Repopulate the advanced settings fields with defaults provided from the
-   * module's config/install/backstop_js.settings.defaults.yml file.
+   * module's config/install/backstop_generator.settings.defaults.yml file.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
   public function populateDefaults() {
     $response = new AjaxResponse();
 
-    $module_path = \Drupal::moduleHandler()->getModule('backstop_js')->getPath();
+    $module_path = \Drupal::moduleHandler()->getModule('backstop_generator')->getPath();
     // Get the module default values.
-    $file_path = DRUPAL_ROOT . '/' . $module_path . '/config/install/backstop_js.settings.defaults.yml';
+    $file_path = DRUPAL_ROOT . '/' . $module_path . '/config/install/backstop_generator.settings.defaults.yml';
     $settings_file = file_get_contents($file_path);
     $settings_yml = Yaml::decode($settings_file);
 

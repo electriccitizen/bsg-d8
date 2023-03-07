@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\backstop_js\Form;
+namespace Drupal\backstop_generator\Form;
 
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -45,7 +45,7 @@ class BackstopReportDeleteForm extends \Drupal\Core\Entity\EntityConfirmFormBase
 
     // Delete the backstop.json file and its parent directory.
     $project_dir = dirname(DRUPAL_ROOT);
-    $backstop_dir = \Drupal::config('backstop_js.settings')->get('backstop_directory');
+    $backstop_dir = \Drupal::config('backstop_generator.settings')->get('backstop_directory');
     return $file_system->deleteRecursive($project_dir . "$backstop_dir/{$this->entity->id()}");
   }
 

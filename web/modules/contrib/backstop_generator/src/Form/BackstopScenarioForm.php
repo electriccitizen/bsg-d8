@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\backstop_js\Form;
+namespace Drupal\backstop_generator\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
@@ -31,7 +31,7 @@ class BackstopScenarioForm extends EntityForm {
       '#type' => 'textfield',
       '#title' => t('Label'),
       '#default_value' => $this->entity->get('label'),
-      '#autocomplete_route_name' => 'backstop_js.autocomplete',
+      '#autocomplete_route_name' => 'backstop_generator.autocomplete',
       '#ajax' => [
         'callback' => '::populate',
         'event' => 'autocompleteclose',
@@ -55,7 +55,7 @@ class BackstopScenarioForm extends EntityForm {
 //      '#type' => 'textfield',
 //      '#title' => $this->t('Label'),
 //      '#target_type' => 'node',
-////      '#autocomplete_route_name' => 'backstop_js.autocomplete',
+////      '#autocomplete_route_name' => 'backstop_generator.autocomplete',
 //      '#ajax' => [
 //        'callback' => '::populateUrl',
 //        'event' => 'autocompleteclose',
@@ -75,7 +75,7 @@ class BackstopScenarioForm extends EntityForm {
 //      '#type' => 'machine_name',
 //      '#default_value' => $this->entity->id(),
 //      '#machine_name' => [
-//        'exists' => '\Drupal\backstop_js\Entity\BackstopScenario::load',
+//        'exists' => '\Drupal\backstop_generator\Entity\BackstopScenario::load',
 //        'source' => [
 //          'scenario'
 //        ]

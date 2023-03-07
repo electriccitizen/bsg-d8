@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\backstop_js\Form;
+namespace Drupal\backstop_generator\Form;
 
 use Drupal\Core\Config\Entity\ConfigEntityStorage;
 use Drupal\Core\Entity\EntityForm;
@@ -11,7 +11,7 @@ use Drupal\Core\Url;
 /**
  * Backstop Report form.
  *
- * @property \Drupal\backstop_js\BackstopReportInterface $entity
+ * @property \Drupal\backstop_generator\BackstopReportInterface $entity
  */
 class BackstopReportForm extends EntityForm {
 
@@ -24,7 +24,7 @@ class BackstopReportForm extends EntityForm {
     $scenario_link = Link::fromTextAndUrl($this->t('Add a Scenario'), $scenario_url);
     $viewport_url = Url::fromRoute('entity.backstop_viewport.add_form');
     $viewport_link = Link::fromTextAndUrl($this->t('Add a Viewport'), $viewport_url);
-    $backstop_config = \Drupal::config('backstop_js.settings');
+    $backstop_config = \Drupal::config('backstop_generator.settings');
 
     $form = parent::form($form, $form_state);
 
@@ -41,7 +41,7 @@ class BackstopReportForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $this->entity->id(),
       '#machine_name' => [
-        'exists' => '\Drupal\backstop_js\Entity\BackstopReport::load',
+        'exists' => '\Drupal\backstop_generator\Entity\BackstopReport::load',
       ],
       '#disabled' => !$this->entity->isNew(),
     ];

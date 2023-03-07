@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\backstop_js\Form;
+namespace Drupal\backstop_generator\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -32,7 +32,7 @@ class BackstopViewportForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $this->entity->id(),
       '#machine_name' => [
-        'exists' => '\Drupal\backstop_js\Entity\BackstopViewport::load',
+        'exists' => '\Drupal\backstop_generator\Entity\BackstopViewport::load',
       ],
       '#disabled' => !$this->entity->isNew(),
     ];
