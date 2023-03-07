@@ -1,0 +1,49 @@
+backstop_report.backstop_report.*:
+  type: config_entity
+  label: Backstop Report
+  mapping:
+    id:
+      type: string
+      label: ID
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+    description:
+      type: string
+    use_globals:
+      type: boolean
+    viewports:
+      type: sequence
+      label: Viewports
+    onBeforeScript:
+      type: string
+      label: onBeforeScript
+    scenarios:
+      type: sequence
+      label: Scenarios
+    paths:
+      type: string
+      label: Paths
+    report:
+      type: string
+      label: Report
+    engine:
+      type: string
+      label: Engine
+    engineOptions:
+      type: string
+      label: engineOptions
+    asyncCaptureLimit:
+      type: integer
+      label: asyncCaptureLimit
+    asyncCompareLimit:
+      type: integer
+      label: asyncCompareList
+    debug:
+      type: boolean
+      label: Debug
+    debugWindow:
+      type: boolean
+      label: debugWindow

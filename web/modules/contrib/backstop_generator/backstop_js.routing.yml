@@ -1,0 +1,124 @@
+backstop_js.settings_form:
+  path: '/admin/config/system/development/backstop-js'
+  defaults:
+    _title: 'BackstopJS settings'
+    _form: 'Drupal\backstop_js\Form\SettingsForm'
+  requirements:
+    _permission: 'administer backstop_js configuration'
+
+# Backstop Viewport routing.
+entity.backstop_viewport.collection:
+  path: '/admin/config/development/backstop-js/viewports'
+  defaults:
+    _entity_list: 'backstop_viewport'
+    _title: 'Backstop Viewport configuration'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+entity.backstop_viewport.add_form:
+  path: '/admin/config/development/backstop-js/viewport/add'
+  defaults:
+    _entity_form: 'backstop_viewport.add'
+    _title: 'Add a backstop viewport'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+entity.backstop_viewport.edit_form:
+  path: '/admin/config/development/backstop-js/viewport/{backstop_viewport}'
+  defaults:
+    _entity_form: 'backstop_viewport.edit'
+    _title: 'Edit a backstop viewport'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+entity.backstop_viewport.delete_form:
+  path: '/admin/config/development/backstop-js/viewport/{backstop_viewport}/delete'
+  defaults:
+    _entity_form: 'backstop_viewport.delete'
+    _title: 'Delete a backstop viewport'
+  requirements:
+    _permission: 'administer backstop_viewport'
+
+# Backstop Scenario routing.
+backstop_js.autocomplete:
+  path: 'backstop-js/scenario/autocomplete'
+  defaults:
+    _controller: '\Drupal\backstop_js\Controller\BackstopJsController::scenarioAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+entity.backstop_scenario.collection:
+  path: '/admin/config/development/backstop-js/scenarios'
+  defaults:
+    _entity_list: 'backstop_scenario'
+    _title: 'Backstop Scenario configuration'
+  requirements:
+    _permission: 'administer backstop_scenario'
+
+entity.backstop_scenario.add_form:
+  path: '/admin/config/development/backstop-js/scenario/add'
+  defaults:
+    _entity_form: 'backstop_scenario.add'
+    _title: 'Add a backstop scenario'
+  requirements:
+    _permission: 'administer backstop_scenario'
+
+entity.backstop_scenario.edit_form:
+  path: '/admin/config/development/backstop-js/scenario/{backstop_scenario}'
+  defaults:
+    _entity_form: 'backstop_scenario.edit'
+    _title: 'Edit a backstop scenario'
+  requirements:
+    _permission: 'administer backstop_scenario'
+
+entity.backstop_scenario.delete_form:
+  path: '/admin/config/development/backstop-js/scenario/{backstop_scenario}/delete'
+  defaults:
+    _entity_form: 'backstop_scenario.delete'
+    _title: 'Delete a backstop scenario'
+  requirements:
+    _permission: 'administer backstop_scenario'
+
+
+# Backstop Report routing.
+entity.backstop_report.collection:
+  path: '/admin/config/development/backstop-js/reports'
+  defaults:
+    _entity_list: 'backstop_report'
+    _title: 'Backstop Report configuration'
+  requirements:
+    _permission: 'administer backstop_report'
+
+entity.backstop_report.add_form:
+  path: '/admin/config/development/backstop-js/report/add'
+  defaults:
+    _entity_form: 'backstop_report.add'
+    _title: 'Add a backstop report'
+  requirements:
+    _permission: 'administer backstop_report'
+
+entity.backstop_report.edit_form:
+  path: '/admin/config/development/backstop-js/report/{backstop_report}'
+  defaults:
+    _entity_form: 'backstop_report.edit'
+    _title: 'Edit a backstop report'
+  requirements:
+    _permission: 'administer backstop_report'
+
+entity.backstop_report.delete_form:
+  path: '/admin/config/development/backstop-js/report/{backstop_report}/delete'
+  defaults:
+    _entity_form: 'backstop_report.delete'
+    _title: 'Delete a backstop report'
+  requirements:
+    _permission: 'administer backstop_report'
+
+# Backstop Commands tob routing.
+backstop_js.commands:
+  path: 'admin/config/development/backstop-js/commands'
+  defaults:
+    _title: 'Commands'
+    _controller: '\Drupal\backstop_js\Controller\BackstopJsController::build'
+  requirements:
+    _permission: 'administer backstop_js'

@@ -8,6 +8,7 @@
 /web/core/
 /web/modules/contrib/*
 !/web/modules/contrib/backstop_generator
+!/web/modules/contrib/backstop_generator/*
 /web/themes/contrib/
 /web/profiles/contrib/
 /web/private/scripts/quicksilver

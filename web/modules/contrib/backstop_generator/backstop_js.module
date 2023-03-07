@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for BackstopJS module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function backstop_js_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (
+    $form_id == 'backstop_js_settings' ||
+    $form_id == 'backstop_report_add_form' ||
+    $form_id == 'backstop_report_edit_form' ||
+    $form_id == 'backstop_scenario_add_form' ||
+    $form_id == 'backstop_scenario_edit_form'
+  ) {
+    $form['#attached']['library'][] = 'backstop_js/backstop_forms';
+  }
+}
