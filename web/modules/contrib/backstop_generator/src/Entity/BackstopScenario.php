@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\backstop_js\Entity;
+namespace Drupal\backstop_generator\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Drupal\backstop_js\BackstopScenarioInterface;
+use Drupal\backstop_generator\BackstopScenarioInterface;
 
 /**
  * Defines the backstop scenario entity type.
@@ -19,10 +19,10 @@ use Drupal\backstop_js\BackstopScenarioInterface;
  *     plural = "@count backstop scenarios",
  *   ),
  *   handlers = {
- *     "list_builder" = "Drupal\backstop_js\BackstopScenarioListBuilder",
+ *     "list_builder" = "Drupal\backstop_generator\BackstopScenarioListBuilder",
  *     "form" = {
- *       "add" = "Drupal\backstop_js\Form\BackstopScenarioForm",
- *       "edit" = "Drupal\backstop_js\Form\BackstopScenarioForm",
+ *       "add" = "Drupal\backstop_generator\Form\BackstopScenarioForm",
+ *       "edit" = "Drupal\backstop_generator\Form\BackstopScenarioForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
  *     }
  *   },

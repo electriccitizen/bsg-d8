@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\backstop_js\Entity;
+namespace Drupal\backstop_generator\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Drupal\backstop_js\BackstopViewportInterface;
+use Drupal\backstop_generator\BackstopViewportInterface;
 
 /**
  * Defines the backstop viewport entity type.
@@ -19,10 +19,10 @@ use Drupal\backstop_js\BackstopViewportInterface;
  *     plural = "@count backstop viewports",
  *   ),
  *   handlers = {
- *     "list_builder" = "Drupal\backstop_js\BackstopViewportListBuilder",
+ *     "list_builder" = "Drupal\backstop_generator\BackstopViewportListBuilder",
  *     "form" = {
- *       "add" = "Drupal\backstop_js\Form\BackstopViewportForm",
- *       "edit" = "Drupal\backstop_js\Form\BackstopViewportForm",
+ *       "add" = "Drupal\backstop_generator\Form\BackstopViewportForm",
+ *       "edit" = "Drupal\backstop_generator\Form\BackstopViewportForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
  *     }
  *   },

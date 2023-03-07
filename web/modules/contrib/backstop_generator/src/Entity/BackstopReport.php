@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\backstop_js\Entity;
+namespace Drupal\backstop_generator\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Drupal\backstop_js\BackstopReportInterface;
+use Drupal\backstop_generator\BackstopReportInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\File\FileSystemInterface;
@@ -22,11 +22,11 @@ use Drupal\Core\File\FileSystemInterface;
  *     plural = "@count backstop reports",
  *   ),
  *   handlers = {
- *     "list_builder" = "Drupal\backstop_js\BackstopReportListBuilder",
+ *     "list_builder" = "Drupal\backstop_generator\BackstopReportListBuilder",
  *     "form" = {
- *       "add" = "Drupal\backstop_js\Form\BackstopReportForm",
- *       "edit" = "Drupal\backstop_js\Form\BackstopReportForm",
- *       "delete" = "Drupal\backstop_js\Form\BackstopReportDeleteForm"
+ *       "add" = "Drupal\backstop_generator\Form\BackstopReportForm",
+ *       "edit" = "Drupal\backstop_generator\Form\BackstopReportForm",
+ *       "delete" = "Drupal\backstop_generator\Form\BackstopReportDeleteForm"
  *     }
  *   },
  *   config_prefix = "report",
@@ -182,7 +182,7 @@ class BackstopReport extends ConfigEntityBase implements BackstopReportInterface
     $backstop = new \stdClass();
     $viewport_entities = $this->getConfigEntities('backstop_viewport');
     $scenario_entities = $this->getConfigEntities('backstop_scenario');
-    $backstop_config = \Drupal::config('backstop_js.settings');
+    $backstop_config = \Drupal::config('backstop_generator.settings');
 
     $backstop->id = $this->label;
 
