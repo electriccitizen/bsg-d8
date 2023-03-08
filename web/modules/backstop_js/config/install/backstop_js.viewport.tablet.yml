@@ -1,8 +1,0 @@
-langcode: en
-status: false
-dependencies: {  }
-id: tablet
-label: Tablet
-description: null
-height: '768'
-width: '1024'

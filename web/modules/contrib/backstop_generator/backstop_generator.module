@@ -10,6 +10,19 @@
  */
 
 /**
+ * Implements hook_help().
+ */
+function backstop_generator_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match) {
+  $path = Drupal::moduleHandler()->getModule('backstop_generator')->getPath();
+  $help_file = file_get_contents($path . '/README.md');
+
+  switch ($route_name) {
+    case 'help.page.backstop_generator':
+      return t($help_file);
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function backstop_generator_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {

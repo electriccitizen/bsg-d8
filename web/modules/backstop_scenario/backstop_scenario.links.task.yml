@@ -1,5 +1,0 @@
-backstop_scenario.scenarios:
-  title: Scenarios
-  route_name: entity.backstop_scenario.collection
-  base_route: backstop_generator.admin
-

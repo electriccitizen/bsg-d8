@@ -1,8 +1,0 @@
-langcode: en
-status: false
-dependencies: {  }
-id: phone
-label: Phone
-description: null
-height: '480'
-width: '320'

@@ -1,5 +1,0 @@
-backstop_report.reports:
-  title: Reports
-  route_name: entity.backstop_report.collection
-  base_route: backstop_generator.admin
-

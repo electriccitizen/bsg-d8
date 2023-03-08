@@ -1,5 +1,0 @@
-entity.backstop_scenario.add_form:
-  route_name: 'entity.backstop_scenario.add_form'
-  title: 'Add backstop scenario'
-  appears_on:
-    - entity.backstop_scenario.collection
