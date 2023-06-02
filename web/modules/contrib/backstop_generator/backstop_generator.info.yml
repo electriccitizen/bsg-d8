@@ -3,5 +3,5 @@ type: module
 description: Generates backstop.json files for visual-regression testing.
 package: Development
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 configure: backstop_generator.settings_form
